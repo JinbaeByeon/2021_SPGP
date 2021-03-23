@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">PairGame</string>
+    <string name="restart_dialog_title">Restart</string>
+    <string name="restart_dialog_message">Do you really want to restart the game?</string>
+    <string name="common_yes">Yes</string>
+    <string name="common_no">No</string>
+</resources>
