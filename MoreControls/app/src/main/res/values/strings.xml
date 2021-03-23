@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MoreControls</string>
+    <string name="check_use_firewall">Use Firewall</string>
+    <string name="btn_apply">APPLY</string>
+</resources>
