@@ -1,4 +1,4 @@
-package kr.ac.kpu.game.s2015182013.cookierun;
+package kr.ac.kpu.game.s2015182013.cookierun.ui.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -25,7 +25,7 @@ public class GameView extends View {
 
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        kr.ac.kpu.game.s2015182013.cookierun.ui.view.GameView.view = this;
+        view = this;
         kr.ac.kpu.game.s2015182013.cookierun.framework.Sound.init(context);
         running = true;
 //        startUpdating();

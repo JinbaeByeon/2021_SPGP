@@ -1,7 +1,9 @@
-package kr.ac.kpu.game.s2015182013.cookierun;
+package kr.ac.kpu.game.s2015182013.cookierun.utils;
 
 import android.graphics.RectF;
 import android.util.Log;
+
+import kr.ac.kpu.game.s2015182013.cookierun.framework.BoxCollidable;
 
 
 public class CollisionHelper {

@@ -1,11 +1,10 @@
-package kr.ac.kpu.game.s2015182013.cookierun;
+package kr.ac.kpu.game.s2015182013.cookierun.game;
 
 import android.graphics.Canvas;
 import android.graphics.RectF;
 
-import kr.ac.kpu.game.s2015182013.cookierun.framework.BoxCollidable;
-import kr.ac.kpu.game.s2015182013.cookierun.framework.IndexedAnimationGameBitmap;
-import kr.ac.kpu.game.s2015182013.cookierun.framework.MainGame;
+import kr.ac.kpu.game.s2015182013.cookierun.R;
+import kr.ac.kpu.game.s2015182013.cookierun.framework.GameObject;
 
 
 public class Player implements GameObject, kr.ac.kpu.game.s2015182013.cookierun.framework.BoxCollidable {

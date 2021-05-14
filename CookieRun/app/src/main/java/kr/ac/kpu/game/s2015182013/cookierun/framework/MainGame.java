@@ -1,10 +1,15 @@
-package kr.ac.kpu.game.s2015182013.cookierun;
+package kr.ac.kpu.game.s2015182013.cookierun.framework;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import kr.ac.kpu.game.s2015182013.cookierun.ui.view.GameView;
+import kr.ac.kpu.game.s2015182013.cookierun.game.Player;
+import kr.ac.kpu.game.s2015182013.cookierun.R;
+import kr.ac.kpu.game.s2015182013.cookierun.game.Score;
 
 public class MainGame {
     private static final String TAG = kr.ac.kpu.game.s2015182013.cookierun.framework.MainGame.class.getSimpleName();

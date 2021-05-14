@@ -1,4 +1,4 @@
-package kr.ac.kpu.game.s2015182013.cookierun;
+package kr.ac.kpu.game.s2015182013.cookierun.framework;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -7,6 +7,8 @@ import android.graphics.Canvas;
 import android.graphics.RectF;
 
 import java.util.HashMap;
+
+import kr.ac.kpu.game.s2015182013.cookierun.ui.view.GameView;
 
 
 public class GameBitmap {

@@ -1,11 +1,13 @@
-package kr.ac.kpu.game.s2015182013.cookierun;
+package kr.ac.kpu.game.s2015182013.cookierun.game;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
-import kr.ac.kpu.game.s2015182013.cookierun.framework.GameBitmap;
+import kr.ac.kpu.game.s2015182013.cookierun.R;
+import kr.ac.kpu.game.s2015182013.cookierun.framework.GameObject;
+import kr.ac.kpu.game.s2015182013.cookierun.ui.view.GameView;
 
 
 public class Score implements GameObject {

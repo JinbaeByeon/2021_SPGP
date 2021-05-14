@@ -1,4 +1,4 @@
-package kr.ac.kpu.game.s2015182013.cookierun;
+package kr.ac.kpu.game.s2015182013.cookierun.framework;
 
 import android.content.Context;
 import android.media.AudioAttributes;
@@ -24,12 +24,12 @@ public class Sound {
                     .setUsage(AudioAttributes.USAGE_GAME)
                     .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                     .build();
-            kr.ac.kpu.game.s2015182013.cookierun.framework.Sound.soundPool = new SoundPool.Builder()
+            soundPool = new SoundPool.Builder()
                     .setAudioAttributes(audioAttributes)
                     .setMaxStreams(3)
                     .build();
         } else {
-            kr.ac.kpu.game.s2015182013.cookierun.framework.Sound.soundPool = new SoundPool(3, AudioManager.STREAM_MUSIC, 0);
+            soundPool = new SoundPool(3, AudioManager.STREAM_MUSIC, 0);
         }
 
         for (int resId: SOUND_IDS) {
