@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import kr.ac.kpu.game.s2015182013.cookierun.game.Platform;
 import kr.ac.kpu.game.s2015182013.cookierun.ui.view.GameView;
 import kr.ac.kpu.game.s2015182013.cookierun.game.Player;
 import kr.ac.kpu.game.s2015182013.cookierun.R;
@@ -47,7 +48,7 @@ public class MainGame {
     }
 
     public enum Layer {
-        bg1, enemy, bullet, player, bg2, ui, controller, ENEMY_COUNT
+        bg, platform, player,  ui, controller, LAYER_COUNT
     }
     public boolean initResources() {
         if (initialized) {
@@ -56,15 +57,21 @@ public class MainGame {
         int w = GameView.view.getWidth();
         int h = GameView.view.getHeight();
 
-        initLayers(Layer.ENEMY_COUNT.ordinal());
+        initLayers(Layer.LAYER_COUNT.ordinal());
 
         player = new Player(w/2, h - 300);
-        //layers.get(Layer.player.ordinal()).add(player);
-//        add(Layer.player, player);
+        layers.get(Layer.player.ordinal()).add(player);
+        add(Layer.player, player);
 
-        add(Layer.bg1, new HorizontalScrollBackground(R.mipmap.cookie_run_bg_1,10));
-        add(Layer.bg1, new HorizontalScrollBackground(R.mipmap.cookie_run_bg_2,20));
-        add(Layer.bg1, new HorizontalScrollBackground(R.mipmap.cookie_run_bg_3,30));
+        add(Layer.bg, new HorizontalScrollBackground(R.mipmap.cookie_run_bg_1,10));
+        add(Layer.bg, new HorizontalScrollBackground(R.mipmap.cookie_run_bg_2,20));
+        add(Layer.bg, new HorizontalScrollBackground(R.mipmap.cookie_run_bg_3,30));
+        float tx = 100,ty =h-500;
+        while (tx<=w) {
+            Platform platform = new Platform(Platform.Type.T_10x2, tx, ty);
+            add(Layer.platform, platform);
+            tx += platform.getDstWidth();
+        }
 
         int margin = (int) (20 * GameView.MULTIPLIER);
         score = new Score(w - margin, margin);
@@ -104,7 +111,8 @@ public class MainGame {
         int action = event.getAction();
 //        if (action == MotionEvent.ACTION_DOWN) {
         if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE) {
-            player.moveTo(event.getX(), event.getY());
+            player.Jump();
+//            player.moveTo(event.getX(), event.getY());
 //            int li = 0;
 //            for (ArrayList<GameObject> objects: layers) {
 //                for (GameObject o : objects) {

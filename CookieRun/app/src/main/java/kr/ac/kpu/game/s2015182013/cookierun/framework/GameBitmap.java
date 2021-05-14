@@ -64,4 +64,7 @@ public class GameBitmap {
         rect.set(dl, dt, dr, db);
     }
 
+    public void move(float x, float y) {
+
+    }
 }
