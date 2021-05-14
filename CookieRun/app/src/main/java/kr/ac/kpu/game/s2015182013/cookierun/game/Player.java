@@ -45,15 +45,15 @@ public class Player implements GameObject, kr.ac.kpu.game.s2015182013.cookierun.
 
     public void update() {
         MainGame game = MainGame.get();
-        if(state==State.Jump){
+        if(state==State.Jump|| state==State.DoubleJump){
             float y = this.y + vertSpeed* game.frameTime;
             vertSpeed += GRAVITY*game.frameTime;
             this.y = y;
-            if(this.y>=ground_y) {
-                this.y = ground_y;
-                state = State.Running;
-                charBitmap.setIndices(100,101,102,103);
-            }
+        }
+        if(this.y>=ground_y) {
+            this.y = ground_y;
+            state = State.Running;
+            charBitmap.setIndices(100,101,102,103);
         }
 
     }
@@ -71,6 +71,11 @@ public class Player implements GameObject, kr.ac.kpu.game.s2015182013.cookierun.
     public void Jump(){
         if(state != State.Running&&state != State.Jump && state != State.Hit){
             Log.d(TAG,"점프");
+            return;
+        }
+        if(state == State.Jump){
+            state = State.DoubleJump;
+            vertSpeed = -JUMP_POWER;
             return;
         }
         state = State.Jump;
