@@ -13,15 +13,15 @@ import kr.ac.kpu.game.s2015182013.termproject.ui.view.GameView;
 import kr.ac.kpu.game.s2015182013.termproject.utils.CollisionHelper;
 
 public class MainGame {
-    private static final String TAG = kr.ac.kpu.game.s2015182013.termproject.game.MainGame.class.getSimpleName();
+    private static final String TAG = MainGame.class.getSimpleName();
     // singleton
-    private static kr.ac.kpu.game.s2015182013.termproject.game.MainGame instance;
+    private static MainGame instance;
     private Player player;
     private Score score;
 
-    public static kr.ac.kpu.game.s2015182013.termproject.game.MainGame get() {
+    public static MainGame get() {
         if (instance == null) {
-            instance = new kr.ac.kpu.game.s2015182013.termproject.game.MainGame();
+            instance = new MainGame();
         }
         return instance;
     }
@@ -102,8 +102,9 @@ public class MainGame {
             for (GameObject o2: bullets) {
                 Bullet bullet = (Bullet) o2;
                 if (CollisionHelper.collides(enemy, bullet)) {
+                    bullet.attack(enemy);
                     remove(bullet, false);
-                    remove(enemy, false);
+//                    remove(enemy, false);
                     score.addScore(10);
                     collided = true;
                     break;

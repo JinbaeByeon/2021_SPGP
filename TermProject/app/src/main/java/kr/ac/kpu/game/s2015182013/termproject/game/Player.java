@@ -23,7 +23,7 @@ public class Player implements GameObject, BoxCollidable {
     private GameBitmap fireBitmap;
     private float cx;
     private float cy;
-    private int index;
+    private float index;
 
     public Player(float x, float y) {
         this.x = x;
@@ -48,12 +48,12 @@ public class Player implements GameObject, BoxCollidable {
 
         float dx = tx-cx;
         if(dx<0&& index>0)
-            --index;
+            index= index -0.1f;
         else if(dx>0&&index<10)
-            ++index;
+            index= index +0.1f;
 //        else
 //            index =5;
-        planeBitmap.setIndex(index);
+        planeBitmap.setIndex((int)index);
         float dy = ty-cy;
         cx=tx;
         cy=ty;

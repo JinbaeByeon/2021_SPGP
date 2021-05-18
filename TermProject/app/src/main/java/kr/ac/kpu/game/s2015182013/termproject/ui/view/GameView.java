@@ -25,7 +25,7 @@ public class GameView extends View {
 
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        kr.ac.kpu.game.s2015182013.termproject.ui.view.GameView.view = this;
+        GameView.view = this;
         Sound.init(context);
         running = true;
 //        startUpdating();

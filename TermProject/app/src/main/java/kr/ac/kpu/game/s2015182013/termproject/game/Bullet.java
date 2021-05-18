@@ -11,11 +11,12 @@ import kr.ac.kpu.game.s2015182013.termproject.framework.GameObject;
 import kr.ac.kpu.game.s2015182013.termproject.framework.Recyclable;
 
 public class Bullet implements GameObject, BoxCollidable, Recyclable {
-    private static final String TAG = kr.ac.kpu.game.s2015182013.termproject.game.Bullet.class.getSimpleName();
+    private static final String TAG = Bullet.class.getSimpleName();
     private float x;
     private final GameBitmap bitmap;
     private float y;
     private int speed;
+    private final int damage = 10;
 
     private Bullet(float x, float y, int speed) {
         this.x = x;
@@ -66,5 +67,9 @@ public class Bullet implements GameObject, BoxCollidable, Recyclable {
     @Override
     public void recycle() {
         // 재활용통에 들어가는 시점에 불리는 함수. 현재는 할일없음.
+    }
+
+    public void attack(Enemy enemy) {
+        enemy.hitBullet(damage);
     }
 }

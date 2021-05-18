@@ -5,7 +5,7 @@ import android.graphics.Rect;
 
 import kr.ac.kpu.game.s2015182013.termproject.ui.view.GameView;
 
-public class AnimationGameBitmap extends kr.ac.kpu.game.s2015182013.termproject.framework.GameBitmap {
+public class AnimationGameBitmap extends GameBitmap {
 //    private static final int PIXEL_MULTIPLIER = 4;
     private final int imageWidth;
     private final int imageHeight;

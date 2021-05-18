@@ -11,7 +11,7 @@ import java.util.HashMap;
 import kr.ac.kpu.game.s2015182013.termproject.R;
 
 public class Sound {
-    private static final String TAG = kr.ac.kpu.game.s2015182013.termproject.framework.Sound.class.getSimpleName();
+    private static final String TAG = Sound.class.getSimpleName();
     private static SoundPool soundPool;
     private static final int[] SOUND_IDS = {
             R.raw.hadouken
@@ -25,12 +25,12 @@ public class Sound {
                     .setUsage(AudioAttributes.USAGE_GAME)
                     .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                     .build();
-            kr.ac.kpu.game.s2015182013.termproject.framework.Sound.soundPool = new SoundPool.Builder()
+            Sound.soundPool = new SoundPool.Builder()
                     .setAudioAttributes(audioAttributes)
                     .setMaxStreams(3)
                     .build();
         } else {
-            kr.ac.kpu.game.s2015182013.termproject.framework.Sound.soundPool = new SoundPool(3, AudioManager.STREAM_MUSIC, 0);
+            Sound.soundPool = new SoundPool(3, AudioManager.STREAM_MUSIC, 0);
         }
 
         for (int resId: SOUND_IDS) {
