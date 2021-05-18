@@ -6,5 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.MainActivity">
 
+    <kr.ac.kpu.game.s2015182013.termproject.ui.view.GameView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

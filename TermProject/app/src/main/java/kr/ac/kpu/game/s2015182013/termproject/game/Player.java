@@ -2,11 +2,13 @@ package kr.ac.kpu.game.s2015182013.termproject.game;
 
 import android.graphics.Canvas;
 import android.graphics.RectF;
+import android.util.Log;
 
 import kr.ac.kpu.game.s2015182013.termproject.R;
 import kr.ac.kpu.game.s2015182013.termproject.framework.BoxCollidable;
 import kr.ac.kpu.game.s2015182013.termproject.framework.GameBitmap;
 import kr.ac.kpu.game.s2015182013.termproject.framework.GameObject;
+import kr.ac.kpu.game.s2015182013.termproject.ui.view.GameView;
 
 public class Player implements GameObject, BoxCollidable {
     private static final String TAG = kr.ac.kpu.game.s2015182013.termproject.game.Player.class.getSimpleName();
@@ -16,16 +18,18 @@ public class Player implements GameObject, BoxCollidable {
     private float fireTime;
     private float x, y;
     private float tx, ty;
-    private float speed;
     private GameBitmap planeBitmap;
     private GameBitmap fireBitmap;
+    private float px;
+    private float py;
 
     public Player(float x, float y) {
         this.x = x;
         this.y = y;
         this.tx = x;
-        this.ty = 0;
-        this.speed = 800;
+        this.ty = y;
+        this.px = x;
+        this.py = y;
         this.planeBitmap = new GameBitmap(R.mipmap.fighter);
         this.fireBitmap = new GameBitmap(R.mipmap.laser_0);
         this.fireTime = 0.0f;
@@ -33,19 +37,25 @@ public class Player implements GameObject, BoxCollidable {
 
     public void moveTo(float x, float y) {
         this.tx = x;
-        //this.ty = this.y;
+        this.ty = y;
     }
 
     public void update() {
         MainGame game = MainGame.get();
-        float dx = speed * game.frameTime;
-        if (tx < x) { // move left
-            dx = -dx;
-        }
-        x += dx;
-        if ((dx > 0 && x > tx) || (dx < 0 && x < tx)) {
-            x = tx;
-        }
+
+        float dx = tx-px;
+        float dy = ty-py;
+        px=tx;
+        py=ty;
+
+        float w =GameView.view.getWidth();
+        float h =GameView.view.getHeight();
+
+        x+=dx;
+        y+=dy;
+        x = x<0? 0: x>w?w:x;
+        y = y<0? 0: y>h?h:y;
+
 
         fireTime += game.frameTime;
         if (fireTime >= FIRE_INTERVAL) {
@@ -70,5 +80,13 @@ public class Player implements GameObject, BoxCollidable {
     @Override
     public void getBoundingRect(RectF rect) {
         planeBitmap.getBoundingRect(x, y, rect);
+    }
+
+    public void setPivot(float x, float y) {
+        px = x;
+        py = y;
+        tx = x;
+        ty = y;
+        Log.d(TAG,"px: "+px + ", py: " + py);
     }
 }

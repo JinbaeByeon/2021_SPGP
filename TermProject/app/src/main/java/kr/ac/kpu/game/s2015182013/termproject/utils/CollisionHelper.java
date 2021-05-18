@@ -18,7 +18,7 @@ public class CollisionHelper {
         if (rect1.right < rect2.left) return false;
         if (rect1.bottom < rect2.top) return false;
 
-        Log.d(TAG, "1:" + rect1 + " 2:" + rect2);
+//        Log.d(TAG, "1:" + rect1 + " 2:" + rect2);
         return true;
     }
 }
