@@ -8,6 +8,7 @@ import kr.ac.kpu.game.s2015182013.termproject.R;
 import kr.ac.kpu.game.s2015182013.termproject.framework.BoxCollidable;
 import kr.ac.kpu.game.s2015182013.termproject.framework.GameBitmap;
 import kr.ac.kpu.game.s2015182013.termproject.framework.GameObject;
+import kr.ac.kpu.game.s2015182013.termproject.framework.IndexedGameBitmap;
 import kr.ac.kpu.game.s2015182013.termproject.ui.view.GameView;
 
 public class Player implements GameObject, BoxCollidable {
@@ -18,21 +19,23 @@ public class Player implements GameObject, BoxCollidable {
     private float fireTime;
     private float x, y;
     private float tx, ty;
-    private GameBitmap planeBitmap;
+    private IndexedGameBitmap planeBitmap;
     private GameBitmap fireBitmap;
-    private float px;
-    private float py;
+    private float cx;
+    private float cy;
+    private int index;
 
     public Player(float x, float y) {
         this.x = x;
         this.y = y;
-        this.tx = x;
-        this.ty = y;
-        this.px = x;
-        this.py = y;
-        this.planeBitmap = new GameBitmap(R.mipmap.fighter);
-        this.fireBitmap = new GameBitmap(R.mipmap.laser_0);
-        this.fireTime = 0.0f;
+        tx = x;
+        ty = y;
+        cx = x;
+        cy = y;
+        planeBitmap = new IndexedGameBitmap(R.mipmap.fighters,67,80,11,0,0);
+        fireBitmap = new GameBitmap(R.mipmap.laser_0);
+        fireTime = 0.0f;
+        index = 5;
     }
 
     public void moveTo(float x, float y) {
@@ -43,10 +46,17 @@ public class Player implements GameObject, BoxCollidable {
     public void update() {
         MainGame game = MainGame.get();
 
-        float dx = tx-px;
-        float dy = ty-py;
-        px=tx;
-        py=ty;
+        float dx = tx-cx;
+        if(dx<0&& index>0)
+            --index;
+        else if(dx>0&&index<10)
+            ++index;
+//        else
+//            index =5;
+        planeBitmap.setIndex(index);
+        float dy = ty-cy;
+        cx=tx;
+        cy=ty;
 
         float w =GameView.view.getWidth();
         float h =GameView.view.getHeight();
@@ -83,10 +93,9 @@ public class Player implements GameObject, BoxCollidable {
     }
 
     public void setPivot(float x, float y) {
-        px = x;
-        py = y;
+        cx = x;
+        cy = y;
         tx = x;
         ty = y;
-        Log.d(TAG,"px: "+px + ", py: " + py);
     }
 }
