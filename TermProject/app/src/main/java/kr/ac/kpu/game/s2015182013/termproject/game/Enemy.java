@@ -58,7 +58,7 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
         range = r.nextInt(2000)-1000;
         fireTime = 0.0f;
         FIRE_INTERVAL -= level-1;
-        power = level*10;
+        power = level*100;
 
 
 

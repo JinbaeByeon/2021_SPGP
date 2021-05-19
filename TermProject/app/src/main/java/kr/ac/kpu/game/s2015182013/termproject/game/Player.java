@@ -98,10 +98,22 @@ public class Player implements GameObject, BoxCollidable {
         }
     }
 
+
     @Override
     public void hitBullet(int damage) {
         hp -= damage;
         hpBar.setHP(hp);
+        if(hp<=0){
+            reset();
+            MainGame.get().reset();
+        }
+    }
+
+    private void reset() {
+        fireTime = 0.0f;
+        index = 5;
+        power =10;
+        hp =100;
     }
 
     @Override

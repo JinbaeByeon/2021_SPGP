@@ -20,6 +20,7 @@ public class MainGame {
     private Player player;
     public Score score;
     private Health health;
+    private VerticalScrollBackground bg,clouds;
 
     public static MainGame get() {
         if (instance == null) {
@@ -33,6 +34,13 @@ public class MainGame {
 //    Player player;
     ArrayList<ArrayList<GameObject>> layers;
     private static HashMap<Class, ArrayList<GameObject>> recycleBin = new HashMap<>();
+
+    public void reset(){
+        recycleBin.clear();
+        layers.clear();
+        initialized = false;
+        initResources();
+    }
 
     public void recycle(GameObject object) {
         Class clazz = object.getClass();
@@ -61,20 +69,24 @@ public class MainGame {
 
         initLayers(Layer.LAYER_COUNT.ordinal());
 
-        player = new Player(w/2, h - 300);
+        if(player == null)
+            player = new Player(w/2, h - 300);
         //layers.get(Layer.player.ordinal()).add(player);
         add(Layer.player, player);
         add(Layer.controller, new EnemyGenerator());
 
         int margin = (int) (20 * GameView.MULTIPLIER);
-        score = new Score(w - margin, margin);
+        if(score == null)
+            score = new Score(w - margin, margin);
         score.setScore(0);
         add(Layer.ui, score);
 
-        VerticalScrollBackground bg = new VerticalScrollBackground(R.mipmap.bg_city, 30);
+        if(bg ==null)
+            bg = new VerticalScrollBackground(R.mipmap.bg_city, 30);
         add(Layer.bg1, bg);
 
-        VerticalScrollBackground clouds = new VerticalScrollBackground(R.mipmap.clouds, 40);
+        if(clouds ==null)
+            clouds = new VerticalScrollBackground(R.mipmap.clouds, 40);
         add(Layer.bg2, clouds);
 
         initialized = true;
