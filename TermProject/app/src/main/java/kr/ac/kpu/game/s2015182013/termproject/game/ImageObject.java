@@ -34,4 +34,5 @@ public class ImageObject implements GameObject {
     public void draw(Canvas canvas) {
         canvas.drawBitmap(bitmap, srcRect, dstRect, null);
     }
+
 }

@@ -2,7 +2,6 @@ package kr.ac.kpu.game.s2015182013.termproject.game;
 
 import android.graphics.Canvas;
 import android.graphics.RectF;
-import android.util.Log;
 
 import kr.ac.kpu.game.s2015182013.termproject.R;
 import kr.ac.kpu.game.s2015182013.termproject.framework.BoxCollidable;
@@ -48,9 +47,9 @@ public class Player implements GameObject, BoxCollidable {
 
         float dx = tx-cx;
         if(dx<0&& index>0)
-            index= index -0.1f;
+            index= index -0.3f;
         else if(dx>0&&index<10)
-            index= index +0.1f;
+            index= index +0.3f;
 //        else
 //            index =5;
         planeBitmap.setIndex((int)index);
@@ -77,7 +76,7 @@ public class Player implements GameObject, BoxCollidable {
     private void fireBullet() {
         Bullet bullet = Bullet.get(this.x, this.y, BULLET_SPEED);
         MainGame game = MainGame.get();
-        game.add(MainGame.Layer.bullet, bullet);
+        game.add(MainGame.Layer.pBullet, bullet);
     }
 
     public void draw(Canvas canvas) {
@@ -85,6 +84,11 @@ public class Player implements GameObject, BoxCollidable {
         if (fireTime < LASER_DURATION) {
             fireBitmap.draw(canvas, x, y - 50);
         }
+    }
+
+    @Override
+    public void hitBullet(int damage) {
+
     }
 
     @Override

@@ -9,30 +9,27 @@ import kr.ac.kpu.game.s2015182013.termproject.framework.BoxCollidable;
 import kr.ac.kpu.game.s2015182013.termproject.framework.GameBitmap;
 import kr.ac.kpu.game.s2015182013.termproject.framework.GameObject;
 import kr.ac.kpu.game.s2015182013.termproject.framework.Recyclable;
+import kr.ac.kpu.game.s2015182013.termproject.ui.view.GameView;
 
 public class Bullet implements GameObject, BoxCollidable, Recyclable {
     private static final String TAG = Bullet.class.getSimpleName();
     private float x;
-    private final GameBitmap bitmap;
+    private GameBitmap bitmap;
     private float y;
     private int speed;
     private final int damage = 10;
 
     private Bullet(float x, float y, int speed) {
-        this.x = x;
-        this.y = y;
-        this.speed = -speed;
 
         Log.d(TAG, "loading bitmap for bullet");
-        this.bitmap = new GameBitmap(R.mipmap.laser_1);
     }
 
     //    private static ArrayList<Bullet> recycleBin = new ArrayList<>();
-    public static kr.ac.kpu.game.s2015182013.termproject.game.Bullet get(float x, float y, int speed) {
+    public static Bullet get(float x, float y, int speed) {
         MainGame game = MainGame.get();
         Bullet bullet = (Bullet) game.get(Bullet.class);
         if (bullet == null) {
-            return new kr.ac.kpu.game.s2015182013.termproject.game.Bullet(x, y, speed);
+            bullet = new Bullet(x, y, speed);
         }
         bullet.init(x, y, speed);
         return bullet;
@@ -42,6 +39,12 @@ public class Bullet implements GameObject, BoxCollidable, Recyclable {
         this.x = x;
         this.y = y;
         this.speed = -speed;
+        if(speed>0)
+            bitmap = new GameBitmap(R.mipmap.laser_1);
+        else {
+            bitmap = new GameBitmap(R.mipmap.e_missile);
+            bitmap.setSize(20,20);
+        }
     }
 
     @Override
@@ -49,7 +52,7 @@ public class Bullet implements GameObject, BoxCollidable, Recyclable {
         MainGame game = MainGame.get();
         y += speed * game.frameTime;
 
-        if (y < 0) {
+        if (y < 0|| y> GameView.view.getHeight()) {
             game.remove(this);
         }
     }
@@ -57,6 +60,11 @@ public class Bullet implements GameObject, BoxCollidable, Recyclable {
     @Override
     public void draw(Canvas canvas) {
         bitmap.draw(canvas, x, y);
+    }
+
+    @Override
+    public void hitBullet(int damage) {
+
     }
 
     @Override
@@ -69,7 +77,7 @@ public class Bullet implements GameObject, BoxCollidable, Recyclable {
         // 재활용통에 들어가는 시점에 불리는 함수. 현재는 할일없음.
     }
 
-    public void attack(Enemy enemy) {
-        enemy.hitBullet(damage);
+    public void attack(BoxCollidable object) {
+        object.hitBullet(damage);
     }
 }

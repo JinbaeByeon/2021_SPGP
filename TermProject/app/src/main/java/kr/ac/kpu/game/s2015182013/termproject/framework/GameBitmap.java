@@ -12,6 +12,8 @@ import kr.ac.kpu.game.s2015182013.termproject.ui.view.GameView;
 
 public class GameBitmap {
     private static HashMap<Integer, Bitmap> bitmaps = new HashMap<Integer, Bitmap>();
+    private int hw;
+    private int hh;
 
     public static Bitmap load(int resId) {
         Bitmap bitmap = bitmaps.get(resId);
@@ -29,11 +31,10 @@ public class GameBitmap {
     protected RectF dstRect = new RectF();
     public GameBitmap(int resId) {
         bitmap = load(resId);
+        setSize(getWidth(),getHeight());
     }
 
     public void draw(Canvas canvas, float x, float y) {
-        int hw = getWidth() / 2;
-        int hh = getHeight() / 2;
         //Rect srcRect = new Rect(left, )
         float dl = x - hw * GameView.MULTIPLIER;
         float dt = y - hh * GameView.MULTIPLIER;
@@ -52,8 +53,6 @@ public class GameBitmap {
     }
 
     public void getBoundingRect(float x, float y, RectF rect) {
-        int hw = getWidth() / 2;
-        int hh = getHeight() / 2;
         //Rect srcRect = new Rect(left, )
         float dl = x - hw * GameView.MULTIPLIER;
         float dt = y - hh * GameView.MULTIPLIER;
@@ -62,4 +61,16 @@ public class GameBitmap {
         rect.set(dl, dt, dr, db);
     }
 
+    public void setSize(int w, int h) {
+        setWidth(w);
+        setHeight(h);
+    }
+
+    public void setWidth(int w) {
+        hw =w/2;
+    }
+
+    private void setHeight(int h) {
+        hh=h/2;
+    }
 }

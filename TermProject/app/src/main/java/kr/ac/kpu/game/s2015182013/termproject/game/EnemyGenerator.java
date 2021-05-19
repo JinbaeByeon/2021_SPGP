@@ -37,19 +37,22 @@ public class EnemyGenerator implements GameObject {
         MainGame game = MainGame.get();
         int tenth = GameView.view.getWidth() / 10;
         Random r = new Random();
-        for (int i = 1; i <= 9; i += 2) {
-            int x = tenth * i;
-            int y = 0;
-            int level = wave / 10 - r.nextInt(2);
-            if (level < 1) level = 1;
-            if (level > 4) level = 4;
-            Enemy enemy = Enemy.get(level, x, y, 700);
-            game.add(MainGame.Layer.enemy, enemy);
-        }
+        int w=GameView.view.getWidth()-200;
+        int x = r.nextInt(w);
+        int y = 0;
+
+        int level = wave / 20 - r.nextInt(2);
+        if (level < 1) level = 1;
+        if (level > 4) level = 4;
+        spawnInterval = INITIAL_SPAWN_INTERVAL-level-1;
+
+        Enemy enemy = Enemy.get(level, x, y, 300);
+        game.add(MainGame.Layer.enemy, enemy);
     }
 
     @Override
     public void draw(Canvas canvas) {
         // does nothing
     }
+
 }

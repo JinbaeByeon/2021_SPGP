@@ -1,11 +1,14 @@
 package kr.ac.kpu.game.s2015182013.termproject.game;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.Log;
 
+import java.util.Random;
+
 import kr.ac.kpu.game.s2015182013.termproject.R;
-import kr.ac.kpu.game.s2015182013.termproject.framework.AnimationGameBitmap;
 import kr.ac.kpu.game.s2015182013.termproject.framework.BoxCollidable;
 import kr.ac.kpu.game.s2015182013.termproject.framework.GameBitmap;
 import kr.ac.kpu.game.s2015182013.termproject.framework.GameObject;
@@ -14,15 +17,23 @@ import kr.ac.kpu.game.s2015182013.termproject.ui.view.GameView;
 
 public class Enemy implements GameObject, BoxCollidable, Recyclable {
     private static final float FRAMES_PER_SECOND = 8.0f;
+    private static final int BULLET_SPEED = -1500;
+    private static float FIRE_INTERVAL = 4.0f ;
+    private float fireTime;
+    private GameBitmap fireBitmap;
     private static final int[] RESOURCE_IDS = {
             R.mipmap.enemy_a, R.mipmap.enemy_b, R.mipmap.enemy_c, R.mipmap.enemy_d
     };
     private static final String TAG = kr.ac.kpu.game.s2015182013.termproject.game.Enemy.class.getSimpleName();
     private float x;
-    private GameBitmap bitmap;
+    private GameBitmap planeBitmap;
     private int hp;
     private float y;
     private int speed;
+    Paint paint = new Paint();
+    private int maxHp;
+    private int score;
+    private int range;
 
     private Enemy() {
         Log.d(TAG, "Enemy constructor");
@@ -32,7 +43,7 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
         MainGame game = MainGame.get();
         Enemy enemy = (Enemy) game.get(Enemy.class);
         if (enemy == null) {
-            enemy = new kr.ac.kpu.game.s2015182013.termproject.game.Enemy();
+            enemy = new Enemy();
         }
 
         enemy.init(level, x, y, speed);
@@ -40,14 +51,21 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
     }
 
     private void init(int level, int x, int y, int speed) {
+        Random r = new Random();
         this.x = x;
         this.y = y;
         this.speed = speed;
-        this.hp = level*100;
+        score = hp =maxHp = level  *100;
+        range = r.nextInt(2000)-1000;
+        fireTime = 0.0f;
+        FIRE_INTERVAL -= level-1;
+
+
 
         int resId = RESOURCE_IDS[level - 1];
 
-        this.bitmap = new GameBitmap(resId);
+        planeBitmap = new GameBitmap(resId);
+        planeBitmap.setSize(60,60);
     }
 
     @Override
@@ -55,19 +73,47 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
         MainGame game = MainGame.get();
         y += speed * game.frameTime;
 
+
         if (y > GameView.view.getHeight()) {
             game.remove(this);
         }
+
+        fireTime += game.frameTime;
+        if (fireTime >= FIRE_INTERVAL) {
+            fireBullet();
+            fireTime -= FIRE_INTERVAL;
+        }
+    }
+
+    private void fireBullet() {
+        Bullet bullet = Bullet.get(this.x, this.y, BULLET_SPEED);
+        MainGame game = MainGame.get();
+        game.add(MainGame.Layer.eBullet, bullet);
     }
 
     @Override
     public void draw(Canvas canvas) {
-        bitmap.draw(canvas, x, y);
+        planeBitmap.draw(canvas, x, y);
+        drawHealthBar(canvas);
+    }
+
+    private void drawHealthBar(Canvas canvas) {
+        float h = planeBitmap.getWidth();
+        float w = planeBitmap.getHeight();
+        float l = x- w/2;
+        float t = y + h + 10;
+        float r = x+w/2;
+        float b = t + 30;
+        paint.setColor(Color.GRAY);
+        canvas.drawRect(l,t,r,b,paint);
+        paint.setColor(Color.RED);
+        r = l + w*hp/maxHp;
+        canvas.drawRect(l,t,r,b,paint);
     }
 
     @Override
     public void getBoundingRect(RectF rect) {
-        bitmap.getBoundingRect(x, y, rect);
+        planeBitmap.getBoundingRect(x, y, rect);
     }
 
     @Override
@@ -75,13 +121,15 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
         // 재활용통에 들어가는 시점에 불리는 함수. 현재는 할일없음.
     }
 
+    @Override
     public void hitBullet(int damage) {
         MainGame game = MainGame.get();
         hp -= damage;
 
         if(hp<0) {
             game.remove(this, false);
-            score.addScore(10);
+            game.score.addScore(score);
         }
     }
+
 }

@@ -17,7 +17,7 @@ public class MainGame {
     // singleton
     private static MainGame instance;
     private Player player;
-    private Score score;
+    public Score score;
 
     public static MainGame get() {
         if (instance == null) {
@@ -48,7 +48,7 @@ public class MainGame {
     }
 
     public enum Layer {
-        bg1, enemy, bullet, player, bg2, ui, controller, LAYER_COUNT
+        bg1, eBullet,enemy, pBullet, player, bg2, ui, controller, LAYER_COUNT
     }
     public boolean initResources() {
         if (initialized) {
@@ -94,18 +94,29 @@ public class MainGame {
             }
         }
 
+        ArrayList<GameObject> eBullets = layers.get(Layer.eBullet.ordinal());
+        Player player = (Player) layers.get(Layer.player.ordinal()).get(0);
+
+        for (GameObject o2 : eBullets) {
+            Bullet bullet = (Bullet) o2;
+            if (CollisionHelper.collides(player, bullet)) {
+                bullet.attack(player);
+                remove(bullet, false);
+                break;
+            }
+        }
+
         ArrayList<GameObject> enemies = layers.get(Layer.enemy.ordinal());
-        ArrayList<GameObject> bullets = layers.get(Layer.bullet.ordinal());
+        ArrayList<GameObject> pBullets = layers.get(Layer.pBullet.ordinal());
         for (GameObject o1: enemies) {
             Enemy enemy = (Enemy) o1;
             boolean collided = false;
-            for (GameObject o2: bullets) {
+            for (GameObject o2: pBullets) {
                 Bullet bullet = (Bullet) o2;
                 if (CollisionHelper.collides(enemy, bullet)) {
                     bullet.attack(enemy);
                     remove(bullet, false);
 //                    remove(enemy, false);
-                    score.addScore(10);
                     collided = true;
                     break;
                 }
