@@ -12,51 +12,85 @@ import kr.ac.kpu.game.s2015182013.termproject.framework.Recyclable;
 import kr.ac.kpu.game.s2015182013.termproject.ui.view.GameView;
 
 public class Item implements GameObject, BoxCollidable, Recyclable {
-    private static final float FRAMES_PER_SECOND = 8.0f;
+    private static final float FRAMES_PER_SECOND = 4.0f;
     private static final String TAG = Item.class.getSimpleName();
-    private float x;
+    private static final float LIFE_TIME = 10.f;
+    private float x,y;
     private IndexedAnimationGameBitmap bitmap;
-    private float y;
-    private int speed;
+    private float sx, sy;
+    private float life;
+    private Type type;
 
     private Item(float x, float y) {
 
         Log.d(TAG, "loading bitmap for item");
     }
 
+    public void upgrade(Player p) {
+        p.increase(type);
+    }
+
+
+    enum Type{
+        Power,
+    }
+
     //    private static ArrayList<Bullet> recycleBin = new ArrayList<>();
-    public static Item get(float x, float y) {
+    public static Item get(float x, float y,float sx,float sy,Type type) {
         MainGame game = MainGame.get();
         Item item = (Item) game.get(Item.class);
         if (item == null) {
             item = new Item(x, y);
         }
-        item.init(x, y);
+        item.init(x, y,sx,sy,type);
         return item;
     }
 
-    private void init(float x, float y) {
+    private void init(float x, float y,float sx,float sy,Type type) {
         this.x = x;
         this.y = y;
-        this.speed = 500;
+        this.sx = sx;
+        this.sy = sy;
+        life=0;
+        this.type = type;
 
-        bitmap = new IndexedAnimationGameBitmap(R.mipmap.coin,FRAMES_PER_SECOND,0,34,50,12,20,0);
+        bitmap = new IndexedAnimationGameBitmap(R.mipmap.itempack,FRAMES_PER_SECOND,0,30,25,12,20,10);
         bitmap.setIndices(0,1);
+        bitmap.setSize(100,100);
     }
 
     @Override
     public void update() {
         MainGame game = MainGame.get();
-        x += speed * game.frameTime;
-        y += speed * game.frameTime;
-        if(x>GameView.view.getWidth()&&speed>0){
-            speed =-speed;
+        life += game.frameTime;
+        x += sx * game.frameTime;
+        y += sy * game.frameTime;
+
+        int w =GameView.view.getWidth();
+        int h =GameView.view.getHeight();
+        if(x>w&& sx >0){
+            sx =-sx;
+            x = w;
+        }
+        else if(x<0&& sx <0){
+            sx =-sx;
+            x = 0;
+        }
+        if(y>h&& sy >0){
+            sy =-sy;
+            y=h;
+        }
+        else if(y<0&& sy <0){
+            sy =-sy;
+            y=0;
         }
 
-        if (y> GameView.view.getHeight()) {
+        if (life>LIFE_TIME) {
             game.remove(this);
         }
     }
+
+
 
     @Override
     public void draw(Canvas canvas) {
@@ -76,5 +110,6 @@ public class Item implements GameObject, BoxCollidable, Recyclable {
     @Override
     public void recycle() {
         // 재활용통에 들어가는 시점에 불리는 함수. 현재는 할일없음.
+        life = 0;
     }
 }

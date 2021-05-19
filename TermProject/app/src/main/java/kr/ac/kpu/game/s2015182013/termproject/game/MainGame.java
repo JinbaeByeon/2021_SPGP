@@ -97,6 +97,9 @@ public class MainGame {
                         ((Bullet) o2).attack((BoxCollidable)o1);
                     else if(o2 instanceof Coin)
                         score.addScore(50);
+                    else if(o2 instanceof Item&& o1 instanceof Player) {
+                        ((Item) o2).upgrade((Player)o1);
+                    }
 
                     remove(o2, false);
                     collided = true;
@@ -125,7 +128,7 @@ public class MainGame {
         collides(layers.get(Layer.player.ordinal()),layers.get(Layer.coin.ordinal()));
 
         // 플레이어 - 아이템
-//        collides(layers.get(Layer.player.ordinal()),layers.get(Layer.item.ordinal()));
+        collides(layers.get(Layer.player.ordinal()),layers.get(Layer.item.ordinal()));
 
         // 적 - 플레이어 총알
         collides(layers.get(Layer.enemy.ordinal()),layers.get(Layer.pBullet.ordinal()));

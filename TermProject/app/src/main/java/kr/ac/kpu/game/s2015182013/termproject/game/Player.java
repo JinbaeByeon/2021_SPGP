@@ -25,6 +25,7 @@ public class Player implements GameObject, BoxCollidable {
     private float cy;
     private float index;
     private int hp;
+    private int power;
 
     public Player(float x, float y) {
         this.x = x;
@@ -37,6 +38,7 @@ public class Player implements GameObject, BoxCollidable {
         fireBitmap = new GameBitmap(R.mipmap.laser_0);
         fireTime = 0.0f;
         index = 5;
+        power =10;
 
         hp =100;
         int w = GameView.view.getWidth();
@@ -84,7 +86,7 @@ public class Player implements GameObject, BoxCollidable {
     }
 
     private void fireBullet() {
-        Bullet bullet = Bullet.get(this.x, this.y, BULLET_SPEED);
+        Bullet bullet = Bullet.get(this.x, this.y, BULLET_SPEED,power);
         MainGame game = MainGame.get();
         game.add(MainGame.Layer.pBullet, bullet);
     }
@@ -112,5 +114,13 @@ public class Player implements GameObject, BoxCollidable {
         cy = y;
         tx = x;
         ty = y;
+    }
+
+    public void increase(Item.Type type) {
+        switch (type){
+            case Power:
+                power+=10;
+
+        }
     }
 }

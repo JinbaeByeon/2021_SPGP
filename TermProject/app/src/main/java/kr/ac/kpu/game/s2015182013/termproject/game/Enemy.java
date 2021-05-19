@@ -32,6 +32,7 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
     private int maxHp;
     private int score;
     private int range;
+    private int power;
 
     private Enemy() {
         Log.d(TAG, "Enemy constructor");
@@ -57,6 +58,7 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
         range = r.nextInt(2000)-1000;
         fireTime = 0.0f;
         FIRE_INTERVAL -= level-1;
+        power = level*10;
 
 
 
@@ -84,7 +86,7 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
     }
 
     private void fireBullet() {
-        Bullet bullet = Bullet.get(this.x, this.y, BULLET_SPEED);
+        Bullet bullet = Bullet.get(this.x, this.y, BULLET_SPEED, power);
         MainGame game = MainGame.get();
         game.add(MainGame.Layer.eBullet, bullet);
     }

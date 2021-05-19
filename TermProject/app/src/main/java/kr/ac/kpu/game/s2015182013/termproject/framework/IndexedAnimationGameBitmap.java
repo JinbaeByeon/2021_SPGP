@@ -13,12 +13,14 @@ public class IndexedAnimationGameBitmap extends AnimationGameBitmap {
     private int xcount, border, spacing;
 
     private static final String TAG = IndexedAnimationGameBitmap.class.getSimpleName();
-    private final int frameHeight;
+    private int frameHeight;
+    private int fw;
+    private int h;
 
     public IndexedAnimationGameBitmap(int resId, float framesPerSecond, int frameCount, int width, int height, int xcount, int border, int spacing) {
         super(resId, framesPerSecond, frameCount);
-        this.frameWidth = width;
-        this.frameHeight = height;
+        fw =  frameWidth = width;
+        h = frameHeight = height;
         this.xcount = xcount;
         this.border = border;
         this.spacing = spacing;
@@ -53,11 +55,22 @@ public class IndexedAnimationGameBitmap extends AnimationGameBitmap {
         frameIndex = Math.round(elapsed * 0.001f * framesPerSecond) % frameCount;
         //Log.d(TAG, "frameIndex=" + frameIndex + " frameCount=" + frameCount);
 
-        int fw = frameWidth;
-        int h = frameHeight;
         float hw = fw / 2 * GameView.MULTIPLIER;
         float hh = h / 2 * GameView.MULTIPLIER;
         dstRect.set(x - hw, y - hh, x + hw, y + hh);
         canvas.drawBitmap(bitmap, srcRects.get(frameIndex), dstRect, null);
+    }
+
+    public void setSize(int w, int h) {
+        setWidth(w);
+        setHeight(h);
+    }
+
+    public void setWidth(int w) {
+        fw = w;
+    }
+
+    private void setHeight(int h) {
+        this.h=h;
     }
 }
