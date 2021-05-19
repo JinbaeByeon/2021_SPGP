@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import kr.ac.kpu.game.s2015182013.termproject.R;
+import kr.ac.kpu.game.s2015182013.termproject.framework.BoxCollidable;
 import kr.ac.kpu.game.s2015182013.termproject.framework.GameObject;
 import kr.ac.kpu.game.s2015182013.termproject.framework.Recyclable;
 import kr.ac.kpu.game.s2015182013.termproject.ui.view.GameView;
@@ -49,7 +50,7 @@ public class MainGame {
     }
 
     public enum Layer {
-        bg1, eBullet,enemy, pBullet, player, bg2, ui, controller, LAYER_COUNT
+        bg1, coin,item,eBullet,enemy, pBullet, player, bg2, ui, controller, LAYER_COUNT
     }
     public boolean initResources() {
         if (initialized) {
@@ -70,10 +71,10 @@ public class MainGame {
         score.setScore(0);
         add(Layer.ui, score);
 
-        VerticalScrollBackground bg = new VerticalScrollBackground(R.mipmap.bg_city, 10);
+        VerticalScrollBackground bg = new VerticalScrollBackground(R.mipmap.bg_city, 30);
         add(Layer.bg1, bg);
 
-        VerticalScrollBackground clouds = new VerticalScrollBackground(R.mipmap.clouds, 20);
+        VerticalScrollBackground clouds = new VerticalScrollBackground(R.mipmap.clouds, 40);
         add(Layer.bg2, clouds);
 
         initialized = true;
@@ -87,37 +88,17 @@ public class MainGame {
         }
     }
 
-    public void update() {
-        //if (!initialized) return;
-        for (ArrayList<GameObject> objects: layers) {
-            for (GameObject o : objects) {
-                o.update();
-            }
-        }
-
-        ArrayList<GameObject> eBullets = layers.get(Layer.eBullet.ordinal());
-        Player player = (Player) layers.get(Layer.player.ordinal()).get(0);
-
-        for (GameObject o2 : eBullets) {
-            Bullet bullet = (Bullet) o2;
-            if (CollisionHelper.collides(player, bullet)) {
-                bullet.attack(player);
-                remove(bullet, false);
-                break;
-            }
-        }
-
-        ArrayList<GameObject> enemies = layers.get(Layer.enemy.ordinal());
-        ArrayList<GameObject> pBullets = layers.get(Layer.pBullet.ordinal());
-        for (GameObject o1: enemies) {
-            Enemy enemy = (Enemy) o1;
+    private void collides(ArrayList<GameObject> objects_PE, ArrayList<GameObject> objects_BCI){
+        for (GameObject o1: objects_PE) {
             boolean collided = false;
-            for (GameObject o2: pBullets) {
-                Bullet bullet = (Bullet) o2;
-                if (CollisionHelper.collides(enemy, bullet)) {
-                    bullet.attack(enemy);
-                    remove(bullet, false);
-//                    remove(enemy, false);
+            for (GameObject o2: objects_BCI) {
+                if (CollisionHelper.collides((BoxCollidable)o1, (BoxCollidable)o2)) {
+                    if(o2 instanceof Bullet)
+                        ((Bullet) o2).attack((BoxCollidable)o1);
+                    else if(o2 instanceof Coin)
+                        score.addScore(50);
+
+                    remove(o2, false);
                     collided = true;
                     break;
                 }
@@ -126,6 +107,29 @@ public class MainGame {
                 break;
             }
         }
+
+    }
+
+    public void update() {
+        //if (!initialized) return;
+        for (ArrayList<GameObject> objects: layers) {
+            for (GameObject o : objects) {
+                o.update();
+            }
+        }
+
+        // 플레이어 - 적 총알
+        collides(layers.get(Layer.player.ordinal()),layers.get(Layer.eBullet.ordinal()));
+
+        // 플레이어 - 코인
+        collides(layers.get(Layer.player.ordinal()),layers.get(Layer.coin.ordinal()));
+
+        // 플레이어 - 아이템
+//        collides(layers.get(Layer.player.ordinal()),layers.get(Layer.item.ordinal()));
+
+        // 적 - 플레이어 총알
+        collides(layers.get(Layer.enemy.ordinal()),layers.get(Layer.pBullet.ordinal()));
+
     }
 
     public void draw(Canvas canvas) {

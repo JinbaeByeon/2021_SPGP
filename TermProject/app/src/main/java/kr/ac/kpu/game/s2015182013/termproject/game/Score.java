@@ -5,6 +5,8 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
+import java.util.Random;
+
 import kr.ac.kpu.game.s2015182013.termproject.R;
 import kr.ac.kpu.game.s2015182013.termproject.framework.GameBitmap;
 import kr.ac.kpu.game.s2015182013.termproject.framework.GameObject;
@@ -20,7 +22,14 @@ public class Score implements GameObject {
         this.displayScore = score;
     }
     public void addScore(int amount) {
-        this.score += amount;
+        score += amount;
+        if(score/1000==0){
+            MainGame game = MainGame.get();
+            Random r = new Random();
+            Item item = Item.get(r.nextInt(1000)+500,0);
+            game.add(MainGame.Layer.item,item);
+
+        }
     }
 
     private int score, displayScore;

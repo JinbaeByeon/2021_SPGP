@@ -9,11 +9,11 @@ public class AnimationGameBitmap extends GameBitmap {
 //    private static final int PIXEL_MULTIPLIER = 4;
     private final int imageWidth;
     private final int imageHeight;
-    private final int frameWidth;
-    private final long createdOn;
-    private int frameIndex;
-    private final float framesPerSecond;
-    private final int frameCount;
+    protected int frameWidth;
+    protected final long createdOn;
+    protected int frameIndex;
+    protected final float framesPerSecond;
+    protected int frameCount;
 
     protected Rect srcRect = new Rect();
     public AnimationGameBitmap(int resId, float framesPerSecond, int frameCount) {
