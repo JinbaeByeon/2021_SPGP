@@ -28,6 +28,9 @@ public class EnemyGenerator implements GameObject {
         if (time >= spawnInterval) {
             generate();
             time -= spawnInterval;
+            spawnInterval -=game.frameTime;
+            if(spawnInterval<1)
+                spawnInterval=1;
         }
     }
 
@@ -37,14 +40,13 @@ public class EnemyGenerator implements GameObject {
         MainGame game = MainGame.get();
         int tenth = GameView.view.getWidth() / 10;
         Random r = new Random();
-        int w=GameView.view.getWidth()-200;
-        int x = r.nextInt(w);
+        int w=GameView.view.getWidth();
+        int x = r.nextInt(w-100)+50;
         int y = 0;
 
         int level = wave / 20 - r.nextInt(2);
         if (level < 1) level = 1;
         if (level > 4) level = 4;
-        spawnInterval = INITIAL_SPAWN_INTERVAL-level-1;
 
         Enemy enemy = Enemy.get(level, x, y, 300);
         game.add(MainGame.Layer.enemy, enemy);

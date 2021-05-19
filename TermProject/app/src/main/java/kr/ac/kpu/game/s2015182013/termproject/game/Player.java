@@ -15,6 +15,7 @@ public class Player implements GameObject, BoxCollidable {
     private static final int BULLET_SPEED = 1500;
     private static final float FIRE_INTERVAL = 1.0f / 7.5f;
     private static final float LASER_DURATION = FIRE_INTERVAL / 3;
+    private final Health hpBar;
     private float fireTime;
     private float x, y;
     private float tx, ty;
@@ -23,6 +24,7 @@ public class Player implements GameObject, BoxCollidable {
     private float cx;
     private float cy;
     private float index;
+    private int hp;
 
     public Player(float x, float y) {
         this.x = x;
@@ -35,6 +37,14 @@ public class Player implements GameObject, BoxCollidable {
         fireBitmap = new GameBitmap(R.mipmap.laser_0);
         fireTime = 0.0f;
         index = 5;
+
+        hp =100;
+        int w = GameView.view.getWidth();
+        int margin = (int) (20 * GameView.MULTIPLIER);
+        hpBar = new Health(margin,margin,hp);
+
+        MainGame game = MainGame.get();
+        game.add(MainGame.Layer.ui, hpBar);
     }
 
     public void moveTo(float x, float y) {
@@ -88,7 +98,8 @@ public class Player implements GameObject, BoxCollidable {
 
     @Override
     public void hitBullet(int damage) {
-
+        hp -= damage;
+        hpBar.setHP(hp);
     }
 
     @Override

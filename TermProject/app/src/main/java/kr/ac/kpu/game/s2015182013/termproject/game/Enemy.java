@@ -98,8 +98,8 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
     }
 
     private void drawHealthBar(Canvas canvas) {
-        float h = planeBitmap.getWidth();
-        float w = planeBitmap.getHeight();
+        float w = 100;
+        float h = planeBitmap.getHeight();
         float l = x- w/2;
         float t = y + h + 10;
         float r = x+w/2;
@@ -119,6 +119,7 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
     @Override
     public void recycle() {
         // 재활용통에 들어가는 시점에 불리는 함수. 현재는 할일없음.
+        FIRE_INTERVAL = 4.0f ;
     }
 
     @Override

@@ -42,4 +42,9 @@ public class IndexedGameBitmap extends GameBitmap {
     public void draw(Canvas canvas, RectF dstRect) {
         canvas.drawBitmap(bitmap, srcRect, dstRect, null);
     }
+
+    @Override
+    public void getBoundingRect(float x, float y, RectF rect) {
+        rect.set(dstRect);
+    }
 }

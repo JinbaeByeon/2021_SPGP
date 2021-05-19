@@ -31,7 +31,7 @@ public class GameBitmap {
     protected RectF dstRect = new RectF();
     public GameBitmap(int resId) {
         bitmap = load(resId);
-        setSize(getWidth(),getHeight());
+        setSize( bitmap.getWidth(),bitmap.getHeight());
     }
 
     public void draw(Canvas canvas, float x, float y) {
@@ -45,11 +45,11 @@ public class GameBitmap {
     }
 
     public int getHeight() {
-        return bitmap.getHeight();
+        return hh*2;
     }
 
     public int getWidth() {
-        return bitmap.getWidth();
+        return hw*2;
     }
 
     public void getBoundingRect(float x, float y, RectF rect) {

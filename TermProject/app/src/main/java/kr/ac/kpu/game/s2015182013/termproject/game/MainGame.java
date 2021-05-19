@@ -18,6 +18,7 @@ public class MainGame {
     private static MainGame instance;
     private Player player;
     public Score score;
+    private Health health;
 
     public static MainGame get() {
         if (instance == null) {
