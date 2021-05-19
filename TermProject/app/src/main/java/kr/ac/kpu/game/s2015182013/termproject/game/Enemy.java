@@ -61,7 +61,7 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
         score = hp =maxHp = level  *100;
         sx = r.nextInt(700)+300;
         fireTime = 0.0f;
-        FIRE_INTERVAL -= level-1;
+        FIRE_INTERVAL -= (level-1);
         power = level*100;
         goRight = r.nextBoolean();
 

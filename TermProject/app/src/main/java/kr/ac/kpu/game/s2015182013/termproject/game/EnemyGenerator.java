@@ -44,7 +44,7 @@ public class EnemyGenerator implements GameObject {
         int x = r.nextInt(w-100)+50;
         int y = 0;
 
-        int level = wave / 20 - r.nextInt(2);
+        int level = wave / 5 - r.nextInt(2);
         if (level < 1) level = 1;
         if (level > 4) level = 4;
 
