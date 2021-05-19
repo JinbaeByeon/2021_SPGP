@@ -33,6 +33,10 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
     private int score;
     private int range;
     private int power;
+    private boolean goRight;
+    private float sx;
+    private float dirTime;
+    private Random r;
 
     private Enemy() {
         Log.d(TAG, "Enemy constructor");
@@ -50,15 +54,16 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
     }
 
     private void init(int level, int x, int y, int speed) {
-        Random r = new Random();
+        r = new Random();
         this.x = x;
         this.y = y;
         this.speed = speed;
         score = hp =maxHp = level  *100;
-        range = r.nextInt(2000)-1000;
+        sx = r.nextInt(700)+300;
         fireTime = 0.0f;
         FIRE_INTERVAL -= level-1;
         power = level*100;
+        goRight = r.nextBoolean();
 
 
 
@@ -72,6 +77,19 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
     public void update() {
         MainGame game = MainGame.get();
         y += speed * game.frameTime;
+        x += goRight ? sx * game.frameTime:-sx * game.frameTime;
+
+        int w =GameView.view.getWidth();
+        int h =GameView.view.getHeight();
+        if(x>w){
+            goRight = false;
+            x = w;
+        }
+        else if(x<0){
+            goRight =true;
+            x = 0;
+        }
+
 
 
         if (y > GameView.view.getHeight()) {
@@ -79,6 +97,12 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
         }
 
         fireTime += game.frameTime;
+        dirTime += game.frameTime;
+        if(dirTime>=1.f) {
+            goRight = r.nextBoolean();
+            dirTime-=1.f;
+        }
+
         if (fireTime >= FIRE_INTERVAL) {
             fireBullet();
             fireTime -= FIRE_INTERVAL;
