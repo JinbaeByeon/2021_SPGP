@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 import kr.ac.kpu.game.s2015182013.termproject.R;
 import kr.ac.kpu.game.s2015182013.termproject.framework.BoxCollidable;
+import kr.ac.kpu.game.s2015182013.termproject.framework.GameBitmap;
 import kr.ac.kpu.game.s2015182013.termproject.framework.GameObject;
 import kr.ac.kpu.game.s2015182013.termproject.framework.Recyclable;
 import kr.ac.kpu.game.s2015182013.termproject.ui.view.GameView;
@@ -21,6 +22,7 @@ public class MainGame {
     public Score score;
     private Health health;
     private VerticalScrollBackground bg,clouds;
+    private GameBitmap bgTitle;
 
     public static MainGame get() {
         if (instance == null) {
@@ -30,6 +32,10 @@ public class MainGame {
     }
     public float frameTime;
     private boolean initialized;
+    private Scene scene;
+    private enum Scene{
+        START,INGAME,END
+    }
 
 //    Player player;
     ArrayList<ArrayList<GameObject>> layers;
@@ -88,8 +94,11 @@ public class MainGame {
         if(clouds ==null)
             clouds = new VerticalScrollBackground(R.mipmap.clouds, 40);
         add(Layer.bg2, clouds);
+        bgTitle = new GameBitmap(R.mipmap.bg_title);
+        bgTitle.setSize(w/(int)GameView.MULTIPLIER,h/(int)GameView.MULTIPLIER);
 
         initialized = true;
+        scene = Scene.START;
         return true;
     }
 
@@ -126,52 +135,80 @@ public class MainGame {
     }
 
     public void update() {
-        //if (!initialized) return;
-        for (ArrayList<GameObject> objects: layers) {
-            for (GameObject o : objects) {
-                o.update();
+        switch (scene){
+            case START: {
+
+            } break;
+            case INGAME: {
+
+                //if (!initialized) return;
+                for (ArrayList<GameObject> objects : layers) {
+                    for (GameObject o : objects) {
+                        o.update();
+                    }
+                }
+
+                // 플레이어 - 적 총알
+                collides(layers.get(Layer.player.ordinal()), layers.get(Layer.eBullet.ordinal()));
+
+                // 플레이어 - 코인
+                collides(layers.get(Layer.player.ordinal()), layers.get(Layer.coin.ordinal()));
+
+                // 플레이어 - 아이템
+                collides(layers.get(Layer.player.ordinal()), layers.get(Layer.item.ordinal()));
+
+                // 적 - 플레이어 총알
+                collides(layers.get(Layer.enemy.ordinal()), layers.get(Layer.pBullet.ordinal()));
+            }break;
+            case END:{
+
             }
         }
-
-        // 플레이어 - 적 총알
-        collides(layers.get(Layer.player.ordinal()),layers.get(Layer.eBullet.ordinal()));
-
-        // 플레이어 - 코인
-        collides(layers.get(Layer.player.ordinal()),layers.get(Layer.coin.ordinal()));
-
-        // 플레이어 - 아이템
-        collides(layers.get(Layer.player.ordinal()),layers.get(Layer.item.ordinal()));
-
-        // 적 - 플레이어 총알
-        collides(layers.get(Layer.enemy.ordinal()),layers.get(Layer.pBullet.ordinal()));
-
     }
 
     public void draw(Canvas canvas) {
-        //if (!initialized) return;
-        for (ArrayList<GameObject> objects: layers) {
-            for (GameObject o : objects) {
-                o.draw(canvas);
+        switch (scene) {
+            case START: {
+                int w = GameView.view.getWidth();
+                int h = GameView.view.getHeight();
+                bgTitle.draw(canvas,w/2,h/2);
+
+            }
+            break;
+            case INGAME: {
+
+                //if (!initialized) return;
+                for (ArrayList<GameObject> objects : layers) {
+                    for (GameObject o : objects) {
+                        o.draw(canvas);
+                    }
+                }
+            }
+            case END: {
+
             }
         }
     }
 
     public boolean onTouchEvent(MotionEvent event) {
+
         int action = event.getAction();
-//        if (action == MotionEvent.ACTION_DOWN) {
         if(action == MotionEvent.ACTION_DOWN){
-            player.setPivot(event.getX(), event.getY());
+            if(scene==Scene.START){
+                scene =Scene.INGAME;
+            }
+            else if(scene == Scene.INGAME) {
+                player.setPivot(event.getX(), event.getY());
+            }
+            else if(scene == Scene.END){
+
+            }
         }
         if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE) {
-            player.moveTo(event.getX(), event.getY());
-//            int li = 0;
-//            for (ArrayList<GameObject> objects: layers) {
-//                for (GameObject o : objects) {
-//                    Log.d(TAG, "L:" + li + " " + o);
-//                }
-//                li++;
-//            }
-            return true;
+            if(scene == Scene.INGAME) {
+                player.moveTo(event.getX(), event.getY());
+                return true;
+            }
         }
         return false;
     }

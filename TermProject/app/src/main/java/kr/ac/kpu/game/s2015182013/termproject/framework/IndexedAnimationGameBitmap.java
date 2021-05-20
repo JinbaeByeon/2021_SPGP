@@ -14,8 +14,6 @@ public class IndexedAnimationGameBitmap extends AnimationGameBitmap {
 
     private static final String TAG = IndexedAnimationGameBitmap.class.getSimpleName();
     private int frameHeight;
-    private int fw;
-    private int h;
 
     public IndexedAnimationGameBitmap(int resId, float framesPerSecond, int frameCount, int width, int height, int xcount, int border, int spacing) {
         super(resId, framesPerSecond, frameCount);

@@ -18,7 +18,6 @@ public class GameView extends View {
 
     public static float MULTIPLIER = 2;
     private boolean running;
-    //    private Ball b1, b2;
 
     private long lastFrame;
     public static kr.ac.kpu.game.s2015182013.termproject.ui.view.GameView view;

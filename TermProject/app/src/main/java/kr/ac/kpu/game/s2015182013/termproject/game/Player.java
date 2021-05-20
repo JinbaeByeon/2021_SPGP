@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.RectF;
 
 import kr.ac.kpu.game.s2015182013.termproject.R;
+import kr.ac.kpu.game.s2015182013.termproject.framework.AnimationGameBitmap;
 import kr.ac.kpu.game.s2015182013.termproject.framework.BoxCollidable;
 import kr.ac.kpu.game.s2015182013.termproject.framework.GameBitmap;
 import kr.ac.kpu.game.s2015182013.termproject.framework.GameObject;
@@ -16,11 +17,15 @@ public class Player implements GameObject, BoxCollidable {
     private static final float FIRE_INTERVAL = 1.0f / 7.5f;
     private static final float LASER_DURATION = FIRE_INTERVAL / 3;
     private final Health hpBar;
+    private final AnimationGameBitmap expBitmap;
+    private float expTime;
+    private boolean isHitted;
     private float fireTime;
     private float x, y;
     private float tx, ty;
     private IndexedGameBitmap planeBitmap;
     private GameBitmap fireBitmap;
+
     private float cx;
     private float cy;
     private float index;
@@ -36,9 +41,13 @@ public class Player implements GameObject, BoxCollidable {
         cy = y;
         planeBitmap = new IndexedGameBitmap(R.mipmap.fighters,67,80,11,0,0);
         fireBitmap = new GameBitmap(R.mipmap.laser_0);
+        expBitmap = new AnimationGameBitmap(R.mipmap.hit,8,6);
+        expBitmap.setSize(40,40);
         fireTime = 0.0f;
+        expTime = 0.0f;
         index = 5;
         power =10;
+        isHitted=false;
 
         hp =100;
         int w = GameView.view.getWidth();
@@ -59,9 +68,9 @@ public class Player implements GameObject, BoxCollidable {
 
         float dx = tx-cx;
         if(dx<0&& index>0)
-            index= index -0.3f;
+            index= index -0.5f;
         else if(dx>0&&index<10)
-            index= index +0.3f;
+            index= index +0.5f;
 //        else
 //            index =5;
         planeBitmap.setIndex((int)index);
@@ -77,8 +86,14 @@ public class Player implements GameObject, BoxCollidable {
         x = x<0? 0: x>w?w:x;
         y = y<0? 0: y>h?h:y;
 
-
+        if(isHitted)
+            expTime += game.frameTime;
+        if(expTime>1.f){
+            expTime =0.f;
+            isHitted = false;
+        }
         fireTime += game.frameTime;
+
         if (fireTime >= FIRE_INTERVAL) {
             fireBullet();
             fireTime -= FIRE_INTERVAL;
@@ -96,6 +111,8 @@ public class Player implements GameObject, BoxCollidable {
         if (fireTime < LASER_DURATION) {
             fireBitmap.draw(canvas, x, y - 50);
         }
+        if(isHitted)
+            expBitmap.draw(canvas,x,y);
     }
 
 
@@ -107,6 +124,8 @@ public class Player implements GameObject, BoxCollidable {
             reset();
             MainGame.get().reset();
         }
+        expBitmap.reset();
+        isHitted=true;
     }
 
     private void reset() {

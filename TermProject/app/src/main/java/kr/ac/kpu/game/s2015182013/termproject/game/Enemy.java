@@ -9,6 +9,7 @@ import android.util.Log;
 import java.util.Random;
 
 import kr.ac.kpu.game.s2015182013.termproject.R;
+import kr.ac.kpu.game.s2015182013.termproject.framework.AnimationGameBitmap;
 import kr.ac.kpu.game.s2015182013.termproject.framework.BoxCollidable;
 import kr.ac.kpu.game.s2015182013.termproject.framework.GameBitmap;
 import kr.ac.kpu.game.s2015182013.termproject.framework.GameObject;
@@ -37,6 +38,9 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
     private float sx;
     private float dirTime;
     private Random r;
+    private AnimationGameBitmap expBitmap;
+    private float expTime;
+    private boolean isHitted;
 
     private Enemy() {
         Log.d(TAG, "Enemy constructor");
@@ -64,6 +68,11 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
         FIRE_INTERVAL -= (level-1);
         power = level*100;
         goRight = r.nextBoolean();
+
+        expBitmap = new AnimationGameBitmap(R.mipmap.hit,8,6);
+        expBitmap.setSize(40,40);
+        expTime = 0.0f;
+        isHitted=false;
 
 
 
@@ -96,13 +105,20 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
             game.remove(this);
         }
 
-        fireTime += game.frameTime;
         dirTime += game.frameTime;
         if(dirTime>=1.f) {
             goRight = r.nextBoolean();
             dirTime-=1.f;
         }
 
+        if(isHitted)
+            expTime += game.frameTime;
+        if(expTime>1.f){
+            expTime =0.f;
+            isHitted = false;
+        }
+
+        fireTime += game.frameTime;
         if (fireTime >= FIRE_INTERVAL) {
             fireBullet();
             fireTime -= FIRE_INTERVAL;
@@ -119,6 +135,8 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
     public void draw(Canvas canvas) {
         planeBitmap.draw(canvas, x, y);
         drawHealthBar(canvas);
+        if(isHitted)
+            expBitmap.draw(canvas,x,y);
     }
 
     private void drawHealthBar(Canvas canvas) {
@@ -157,6 +175,8 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
             Coin coin = Coin.get(x,y);
             game.add(MainGame.Layer.coin,coin);
         }
+        expBitmap.reset();
+        isHitted=true;
     }
 
 }
