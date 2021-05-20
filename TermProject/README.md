@@ -132,7 +132,7 @@
 ---------------------------------------------------------------------------------------------------------------
 ### [2차 발표 영상 Youtube Link](https://youtu.be/FeaXRI4UYgY "2021-1 SPGP TermProject 2차 발표")
 
-### [이전 README.md Link](https://github.com/JinbaeByeon/2021-1_SPGP_TermProject/blob/v1/README.md "README.md 1차")
+### [이전 README.md Link](https://github.com/JinbaeByeon/2021_SPGP/blob/v1/TermProject/README.md "README.md 1차")
 
 
 
