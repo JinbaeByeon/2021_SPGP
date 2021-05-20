@@ -14,10 +14,11 @@ import kr.ac.kpu.game.s2015182013.termproject.framework.BoxCollidable;
 import kr.ac.kpu.game.s2015182013.termproject.framework.GameBitmap;
 import kr.ac.kpu.game.s2015182013.termproject.framework.GameObject;
 import kr.ac.kpu.game.s2015182013.termproject.framework.Recyclable;
+import kr.ac.kpu.game.s2015182013.termproject.framework.Sound;
 import kr.ac.kpu.game.s2015182013.termproject.ui.view.GameView;
 
 public class Enemy implements GameObject, BoxCollidable, Recyclable {
-    private static final int BULLET_SPEED = -1500;
+    private static final int BULLET_SPEED = -1000;
     private static float FIRE_INTERVAL = 4.0f ;
     private float fireTime;
     private static final int[] RESOURCE_IDS = {
@@ -121,14 +122,14 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
         fireTime += game.frameTime;
         if (fireTime >= FIRE_INTERVAL) {
             for (int i = 0; i < power; i++) {
-                fireBullet(-10*i);
+                fireBullet(-15*i*(int)GameView.MULTIPLIER);
             }
             fireTime -= FIRE_INTERVAL;
         }
     }
 
     private void fireBullet(int offsetY) {
-        Bullet bullet = Bullet.get(this.x, this.y+offsetY, BULLET_SPEED, power);
+        Bullet bullet = Bullet.get(this.x, this.y+offsetY, BULLET_SPEED, 10);
         MainGame game = MainGame.get();
         game.add(MainGame.Layer.eBullet, bullet);
     }
@@ -170,12 +171,14 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
     public void hitBullet(int damage) {
         MainGame game = MainGame.get();
         hp -= damage;
+        Sound.play(R.raw.enemy_hit);
 
         if(hp<0) {
             game.remove(this, false);
             game.score.addScore(score);
             Coin coin = Coin.get(x,y);
             game.add(MainGame.Layer.coin,coin);
+            Sound.play(R.raw.enemy_destroy);
         }
         expBitmap.reset();
         isHitted=true;

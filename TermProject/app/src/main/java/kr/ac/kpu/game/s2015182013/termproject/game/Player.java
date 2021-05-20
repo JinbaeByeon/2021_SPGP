@@ -31,6 +31,7 @@ public class Player implements GameObject, BoxCollidable {
     private float index;
     private int hp;
     private int power;
+    private int bomb;
 
     public Player(float x, float y) {
         this.x = x;
@@ -71,8 +72,8 @@ public class Player implements GameObject, BoxCollidable {
             index= index -0.5f;
         else if(dx>0&&index<10)
             index= index +0.5f;
-//        else
-//            index =5;
+        else
+            index =5;
         planeBitmap.setIndex((int)index);
         float dy = ty-cy;
         cx=tx;
@@ -151,6 +152,18 @@ public class Player implements GameObject, BoxCollidable {
         switch (type){
             case Power:
                 power+=10;
+                if(power>100)
+                    power=100;
+                break;
+            case Bomb:
+                bomb+=1;
+                break;
+            case Health:
+                hp+=30;
+                if(hp>100)
+                    hp=100;
+                hpBar.setHP(hp);
+                break;
 
         }
     }

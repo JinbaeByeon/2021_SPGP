@@ -24,9 +24,9 @@ public class Score implements GameObject {
     public void addScore(int amount) {
         score += amount;
 
-        if(score%3000==0){
-            MainGame game = MainGame.get();
-            Random r = new Random();
+        MainGame game = MainGame.get();
+        Random r = new Random();
+        if(score%1501==0){
             Item item = Item.get(
                     r.nextInt(1000)+500,
                     r.nextInt(1000)+500,
@@ -35,9 +35,16 @@ public class Score implements GameObject {
 
             game.add(MainGame.Layer.item,item);
         }
-        else if(score%1000==0){
-            MainGame game = MainGame.get();
-            Random r = new Random();
+        else if(score%1001==0){
+            Item item = Item.get(
+                    r.nextInt(1000)+500,
+                    r.nextInt(1000)+500,
+                    r.nextBoolean()?300:-300,
+                    r.nextBoolean()?300:-300, Item.Type.Health);
+
+            game.add(MainGame.Layer.item,item);
+        }
+        else if(score%500==0){
             Item item = Item.get(
                     r.nextInt(1000)+500,
                     r.nextInt(1000)+500,

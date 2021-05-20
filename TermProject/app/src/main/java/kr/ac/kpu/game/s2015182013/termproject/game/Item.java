@@ -6,6 +6,7 @@ import android.util.Log;
 
 import kr.ac.kpu.game.s2015182013.termproject.R;
 import kr.ac.kpu.game.s2015182013.termproject.framework.BoxCollidable;
+import kr.ac.kpu.game.s2015182013.termproject.framework.GameBitmap;
 import kr.ac.kpu.game.s2015182013.termproject.framework.GameObject;
 import kr.ac.kpu.game.s2015182013.termproject.framework.IndexedAnimationGameBitmap;
 import kr.ac.kpu.game.s2015182013.termproject.framework.Recyclable;
@@ -16,7 +17,7 @@ public class Item implements GameObject, BoxCollidable, Recyclable {
     private static final String TAG = Item.class.getSimpleName();
     private static final float LIFE_TIME = 10.f;
     private float x,y;
-    private IndexedAnimationGameBitmap bitmap;
+    private GameBitmap bitmap;
     private float sx, sy;
     private float life;
     private Type type;
@@ -54,17 +55,21 @@ public class Item implements GameObject, BoxCollidable, Recyclable {
         life=0;
         this.type = type;
 
-        bitmap = new IndexedAnimationGameBitmap(R.mipmap.items,FRAMES_PER_SECOND,0,17,17,9,0,0);
-        if(type == Type.Power)
-            bitmap.setIndices(0,1,2,3,4,5,6,7,8);
-        else if(type == Type.Bomb)
-            bitmap.setIndices(9,10,11,12,13,14,15,16,17);
+        if(type == Type.Power){
+            bitmap = new IndexedAnimationGameBitmap(R.mipmap.items,FRAMES_PER_SECOND,
+                    0,17,17,9,0,0);
+            ((IndexedAnimationGameBitmap)bitmap).setIndices(0,1,2,3,4,5,6,7,8);
+        }
+        else if(type == Type.Bomb) {
+            bitmap = new IndexedAnimationGameBitmap(R.mipmap.items,FRAMES_PER_SECOND,
+                    0,17,17,9,0,0);
+            ((IndexedAnimationGameBitmap)bitmap).setIndices(9, 10, 11, 12, 13, 14, 15, 16, 17);
+        }
         else if(type == Type.Health){
-            bitmap.setSrcWidth(15);
-            bitmap.setIndices(4);
+            bitmap = new GameBitmap(R.mipmap.hpicon);
         }
 
-        bitmap.setSize(60,60);
+        bitmap.setSize(50,50);
     }
 
     @Override

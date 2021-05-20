@@ -48,7 +48,7 @@ public class EnemyGenerator implements GameObject {
         if (level < 1) level = 1;
         if (level > 4) level = 4;
 
-        Enemy enemy = Enemy.get(level, x, y, 300);
+        Enemy enemy = Enemy.get(level, x, y, (r.nextInt(50)+50)*level);
         game.add(MainGame.Layer.enemy, enemy);
     }
 
