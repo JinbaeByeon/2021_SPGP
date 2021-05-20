@@ -66,7 +66,7 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
         sx = r.nextInt(300)+300;
         fireTime = 0.0f;
         FIRE_INTERVAL -= (level-1);
-        power = level*10;
+        power = level;
         goRight = r.nextBoolean();
 
         expBitmap = new AnimationGameBitmap(R.mipmap.hit,8,6);
@@ -120,13 +120,15 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
 
         fireTime += game.frameTime;
         if (fireTime >= FIRE_INTERVAL) {
-            fireBullet();
+            for (int i = 0; i < power; i++) {
+                fireBullet(-10*i);
+            }
             fireTime -= FIRE_INTERVAL;
         }
     }
 
-    private void fireBullet() {
-        Bullet bullet = Bullet.get(this.x, this.y, BULLET_SPEED, power);
+    private void fireBullet(int offsetY) {
+        Bullet bullet = Bullet.get(this.x, this.y+offsetY, BULLET_SPEED, power);
         MainGame game = MainGame.get();
         game.add(MainGame.Layer.eBullet, bullet);
     }
