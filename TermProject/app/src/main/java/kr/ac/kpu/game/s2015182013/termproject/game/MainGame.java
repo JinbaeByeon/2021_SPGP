@@ -7,10 +7,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import kr.ac.kpu.game.s2015182013.termproject.R;
+import kr.ac.kpu.game.s2015182013.termproject.framework.BGSound;
 import kr.ac.kpu.game.s2015182013.termproject.framework.BoxCollidable;
 import kr.ac.kpu.game.s2015182013.termproject.framework.GameBitmap;
 import kr.ac.kpu.game.s2015182013.termproject.framework.GameObject;
 import kr.ac.kpu.game.s2015182013.termproject.framework.Recyclable;
+import kr.ac.kpu.game.s2015182013.termproject.framework.Sound;
 import kr.ac.kpu.game.s2015182013.termproject.ui.view.GameView;
 import kr.ac.kpu.game.s2015182013.termproject.utils.CollisionHelper;
 
@@ -46,6 +48,7 @@ public class MainGame {
         layers.clear();
         initialized = false;
         initResources();
+        BGSound.get().stop();
     }
 
     public void recycle(GameObject object) {
@@ -196,6 +199,7 @@ public class MainGame {
         if(action == MotionEvent.ACTION_DOWN){
             if(scene==Scene.START){
                 scene =Scene.INGAME;
+                BGSound.get().playBGM();
             }
             else if(scene == Scene.INGAME) {
                 player.setPivot(event.getX(), event.getY());

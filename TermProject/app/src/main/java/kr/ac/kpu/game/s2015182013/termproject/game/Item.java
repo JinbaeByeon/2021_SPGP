@@ -12,7 +12,7 @@ import kr.ac.kpu.game.s2015182013.termproject.framework.Recyclable;
 import kr.ac.kpu.game.s2015182013.termproject.ui.view.GameView;
 
 public class Item implements GameObject, BoxCollidable, Recyclable {
-    private static final float FRAMES_PER_SECOND = 4.0f;
+    private static final float FRAMES_PER_SECOND = 9.0f;
     private static final String TAG = Item.class.getSimpleName();
     private static final float LIFE_TIME = 10.f;
     private float x,y;
@@ -32,7 +32,7 @@ public class Item implements GameObject, BoxCollidable, Recyclable {
 
 
     enum Type{
-        Power,
+        Power, Bomb, Health
     }
 
     //    private static ArrayList<Bullet> recycleBin = new ArrayList<>();
@@ -54,9 +54,17 @@ public class Item implements GameObject, BoxCollidable, Recyclable {
         life=0;
         this.type = type;
 
-        bitmap = new IndexedAnimationGameBitmap(R.mipmap.itempack,FRAMES_PER_SECOND,0,30,25,12,20,10);
-        bitmap.setIndices(0,1);
-        bitmap.setSize(100,100);
+        bitmap = new IndexedAnimationGameBitmap(R.mipmap.items,FRAMES_PER_SECOND,0,17,17,9,0,0);
+        if(type == Type.Power)
+            bitmap.setIndices(0,1,2,3,4,5,6,7,8);
+        else if(type == Type.Bomb)
+            bitmap.setIndices(9,10,11,12,13,14,15,16,17);
+        else if(type == Type.Health){
+            bitmap.setSrcWidth(15);
+            bitmap.setIndices(4);
+        }
+
+        bitmap.setSize(60,60);
     }
 
     @Override

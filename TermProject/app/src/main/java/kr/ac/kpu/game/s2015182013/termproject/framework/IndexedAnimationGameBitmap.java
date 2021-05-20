@@ -71,4 +71,8 @@ public class IndexedAnimationGameBitmap extends AnimationGameBitmap {
     private void setHeight(int h) {
         this.h=h;
     }
+
+    public void setSrcWidth(int w) {
+        frameWidth = w;
+    }
 }

@@ -63,10 +63,10 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
         this.y = y;
         this.speed = speed;
         score = hp =maxHp = level  *100;
-        sx = r.nextInt(700)+300;
+        sx = r.nextInt(300)+300;
         fireTime = 0.0f;
         FIRE_INTERVAL -= (level-1);
-        power = level*100;
+        power = level*10;
         goRight = r.nextBoolean();
 
         expBitmap = new AnimationGameBitmap(R.mipmap.hit,8,6);
@@ -136,7 +136,7 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
         planeBitmap.draw(canvas, x, y);
         drawHealthBar(canvas);
         if(isHitted)
-            expBitmap.draw(canvas,x,y);
+            expBitmap.draw(canvas,x,y+10);
     }
 
     private void drawHealthBar(Canvas canvas) {

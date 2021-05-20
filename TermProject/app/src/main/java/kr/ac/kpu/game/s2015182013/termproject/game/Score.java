@@ -23,7 +23,19 @@ public class Score implements GameObject {
     }
     public void addScore(int amount) {
         score += amount;
-        if(score%100==0){
+
+        if(score%3000==0){
+            MainGame game = MainGame.get();
+            Random r = new Random();
+            Item item = Item.get(
+                    r.nextInt(1000)+500,
+                    r.nextInt(1000)+500,
+                    r.nextBoolean()?300:-300,
+                    r.nextBoolean()?300:-300, Item.Type.Bomb);
+
+            game.add(MainGame.Layer.item,item);
+        }
+        else if(score%1000==0){
             MainGame game = MainGame.get();
             Random r = new Random();
             Item item = Item.get(
@@ -33,7 +45,6 @@ public class Score implements GameObject {
                     r.nextBoolean()?300:-300, Item.Type.Power);
 
             game.add(MainGame.Layer.item,item);
-
         }
     }
 

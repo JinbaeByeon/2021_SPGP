@@ -10,6 +10,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import kr.ac.kpu.game.s2015182013.termproject.framework.BGSound;
 import kr.ac.kpu.game.s2015182013.termproject.framework.Sound;
 import kr.ac.kpu.game.s2015182013.termproject.game.MainGame;
 
@@ -18,6 +19,7 @@ public class GameView extends View {
 
     public static float MULTIPLIER = 2;
     private boolean running;
+    BGSound bgSound;
 
     private long lastFrame;
     public static kr.ac.kpu.game.s2015182013.termproject.ui.view.GameView view;
@@ -26,6 +28,10 @@ public class GameView extends View {
         super(context, attrs);
         GameView.view = this;
         Sound.init(context);
+
+        bgSound= BGSound.get();
+        bgSound.init(context);
+
         running = true;
 //        startUpdating();
     }
@@ -81,11 +87,13 @@ public class GameView extends View {
     }
 
     public void pauseGame() {
+        bgSound.stop();
         running = false;
     }
 
     public void resumeGame() {
         if (!running) {
+            bgSound.playBGM();
             running = true;
             lastFrame = 0;
             requestCallback();

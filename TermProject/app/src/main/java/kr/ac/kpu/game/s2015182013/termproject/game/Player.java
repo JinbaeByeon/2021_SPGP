@@ -112,7 +112,7 @@ public class Player implements GameObject, BoxCollidable {
             fireBitmap.draw(canvas, x, y - 50);
         }
         if(isHitted)
-            expBitmap.draw(canvas,x,y);
+            expBitmap.draw(canvas,x,y-10);
     }
 
 
