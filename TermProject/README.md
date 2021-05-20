@@ -50,6 +50,7 @@
 - 구성정보: GameBitmap 사용, 일정 시간마다 x축 이동 방향이 랜덤하게 정해진다.
 
 - EnemyGenerator: 스폰시간 마다 적 기체들을 생성하는 클래스. 스폰주기는 점점 짧아지며 스폰이 지속될수록 더 강한 적기들을 생성한다.
+
 ![image](https://user-images.githubusercontent.com/22373033/119006982-d18b5080-b9cb-11eb-861e-79ddb7d7523b.png)
 (스폰주기가 짧아지게 하는 코드)
 
@@ -58,10 +59,12 @@
 
 - Bullet: MainGame의 모든 총알을 담당하는 클래스. 플레이어와 적의 총알은 MainGame의 Layer를 통해 분리되며 Player와 Enemy에서 생성하여 MainGame에 넘겨준다.
 - 구성정보: GameBitmap 사용, 생성 시 받는 speed만큼 y 방향으로 이동한다.
+
 ![image](https://user-images.githubusercontent.com/22373033/119007703-70b04800-b9cc-11eb-8971-793622073a3c.png)
 (충돌한 객체에게 총알이 생성 시 받는 power만큼의 데미지를 적용)
 
 - Item: 현재 파워업, 폭탄, 체력 아이템으로 나뉘며, 플레이어와 충돌처리 시 아이템 타입을 플레이어에게 넘겨주어 타입에 따른 효과를 적용시킨다. 벽에 닿을 시 튕긴다.
+
 ![image](https://user-images.githubusercontent.com/22373033/119008097-d0a6ee80-b9cc-11eb-9a4f-4094ba80bd10.png)
 (GameBitmap을 타입에 따라 IndexedAnimationGameBitmap과 GameBitmap으로 사용)
 
@@ -96,7 +99,7 @@
 
 ---------------------------------------------------------------------------------------------------------------
 [발표 영상 Youtube Link](https://www.youtube.com/watch?v=cfKxoxutmGk "2021-1 SPGP TermProject")
-[이전 README.md Link] (https://github.com/JinbaeByeon/2021_SPGP/tree/v1/TermProject#2015182013-변진배 "README.md 1차")
+[이전 README.md Link](https://github.com/JinbaeByeon/2021_SPGP/tree/v1/TermProject#2015182013-변진배 "README.md 1차")
 
 
 
