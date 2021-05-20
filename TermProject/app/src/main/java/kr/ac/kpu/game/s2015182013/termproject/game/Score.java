@@ -26,7 +26,7 @@ public class Score implements GameObject {
 
         MainGame game = MainGame.get();
         Random r = new Random();
-        if(score%1501==0){
+        if(score%1600==0){
             Item item = Item.get(
                     r.nextInt(1000)+500,
                     r.nextInt(1000)+500,
@@ -35,7 +35,7 @@ public class Score implements GameObject {
 
             game.add(MainGame.Layer.item,item);
         }
-        else if(score%1001==0){
+        else if(score%1100==0){
             Item item = Item.get(
                     r.nextInt(1000)+500,
                     r.nextInt(1000)+500,

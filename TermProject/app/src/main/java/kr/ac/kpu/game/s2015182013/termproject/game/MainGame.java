@@ -48,7 +48,6 @@ public class MainGame {
         layers.clear();
         initialized = false;
         initResources();
-        BGSound.get().stop();
     }
 
     public void recycle(GameObject object) {
@@ -80,7 +79,8 @@ public class MainGame {
 
         if(player == null)
             player = new Player(w/2, h - 300);
-        //layers.get(Layer.player.ordinal()).add(player);
+
+
         add(Layer.player, player);
         add(Layer.controller, new EnemyGenerator());
 
@@ -102,6 +102,7 @@ public class MainGame {
 
         initialized = true;
         scene = Scene.START;
+        BGSound.get().pause();
         return true;
     }
 
@@ -200,6 +201,7 @@ public class MainGame {
             if(scene==Scene.START){
                 scene =Scene.INGAME;
                 BGSound.get().playBGM();
+                return true;
             }
             else if(scene == Scene.INGAME) {
                 player.setPivot(event.getX(), event.getY());

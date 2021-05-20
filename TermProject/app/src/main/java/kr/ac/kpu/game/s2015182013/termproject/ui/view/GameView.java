@@ -87,7 +87,7 @@ public class GameView extends View {
     }
 
     public void pauseGame() {
-        bgSound.stop();
+        bgSound.pause();
         running = false;
     }
 

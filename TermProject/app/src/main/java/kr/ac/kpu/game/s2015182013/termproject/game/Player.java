@@ -134,6 +134,7 @@ public class Player implements GameObject, BoxCollidable {
         index = 5;
         power =10;
         hp =100;
+        hpBar.setHP(hp);
     }
 
     @Override
