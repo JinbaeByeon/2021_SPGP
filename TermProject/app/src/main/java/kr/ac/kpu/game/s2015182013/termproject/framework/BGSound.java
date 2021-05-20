@@ -41,4 +41,9 @@ public class BGSound {
     public void pause() {
         mp.pause();
     }
+
+
+    public boolean isPlaying() {
+        return mp.isPlaying();
+    }
 }
