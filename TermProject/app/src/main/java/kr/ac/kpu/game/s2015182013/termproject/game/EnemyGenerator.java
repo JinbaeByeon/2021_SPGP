@@ -38,7 +38,6 @@ public class EnemyGenerator implements GameObject {
         wave++;
         //Log.d(TAG, "Generate now !!");
         MainGame game = MainGame.get();
-        int tenth = GameView.view.getWidth() / 10;
         Random r = new Random();
         int w=GameView.view.getWidth();
         int x = r.nextInt(w-100)+50;

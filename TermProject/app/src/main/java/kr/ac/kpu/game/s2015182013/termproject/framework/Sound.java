@@ -19,7 +19,6 @@ public class Sound {
     };
     private static HashMap<Integer, Integer> soundIdMap = new HashMap<>();
 
-    private MediaPlayer mp;
     public static void init(Context context) {
         AudioAttributes audioAttributes;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
