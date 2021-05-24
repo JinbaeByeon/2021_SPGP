@@ -25,6 +25,11 @@ public class Player implements GameObject, BoxCollidable {
     private int[] ANIM_INDICES_JUMP = { 7, 8 };
     private int[] ANIM_INDICES_DOUBLE_JUMP = { 1, 2, 3, 4 };
 
+    private int[][] BB_DIFFS= {
+            {-60,0,60,135},
+            {-60,20,60,135},
+            {-60,20,60,135}};
+
     private enum State {
         running, jump, doubleJump, slide, hit
     }
@@ -72,6 +77,7 @@ public class Player implements GameObject, BoxCollidable {
 
     @Override
     public void getBoundingRect(RectF rect) {
+        charBitmap.getBoundingRect(x,y,rect,BB_DIFFS[state.ordinal()]);
         //planeBitmap.getBoundingRect(x, y, rect);
     }
 

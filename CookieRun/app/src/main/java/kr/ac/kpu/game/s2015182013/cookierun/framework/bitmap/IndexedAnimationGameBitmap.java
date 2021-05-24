@@ -2,6 +2,7 @@ package kr.ac.kpu.game.s2015182013.cookierun.framework.bitmap;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -49,4 +50,5 @@ public class IndexedAnimationGameBitmap extends AnimationGameBitmap {
         dstRect.set(x - hw, y - hh, x + hw, y + hh);
         canvas.drawBitmap(bitmap, srcRects.get(frameIndex), dstRect, null);
     }
+
 }

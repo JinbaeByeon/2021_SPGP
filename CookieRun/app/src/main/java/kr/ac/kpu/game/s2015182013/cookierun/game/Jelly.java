@@ -1,17 +1,19 @@
 package kr.ac.kpu.game.s2015182013.cookierun.game;
 
 import android.graphics.Canvas;
+import android.graphics.RectF;
 import android.util.Log;
 
 import kr.ac.kpu.game.s2015182013.cookierun.R;
 import kr.ac.kpu.game.s2015182013.cookierun.framework.bitmap.GameBitmap;
 import kr.ac.kpu.game.s2015182013.cookierun.framework.bitmap.IndexedGameBitmap;
 import kr.ac.kpu.game.s2015182013.cookierun.framework.game.BaseGame;
+import kr.ac.kpu.game.s2015182013.cookierun.framework.iface.BoxCollidable;
 import kr.ac.kpu.game.s2015182013.cookierun.framework.iface.GameObject;
 import kr.ac.kpu.game.s2015182013.cookierun.framework.object.ImageObject;
 import kr.ac.kpu.game.s2015182013.cookierun.framework.view.GameView;
 
-public class Jelly extends ImageObject {
+public class Jelly extends ImageObject implements BoxCollidable {
     private static final String TAG = Jelly.class.getSimpleName();
     public static final int JELLY_WIDTH = 66;
     public static final int JELLY_HEIGHT = 66;
@@ -19,10 +21,15 @@ public class Jelly extends ImageObject {
     public static final int BORDER_WIDTH = 2;
     public static final int SPACING_WIDTH = 2;
     private final IndexedGameBitmap ibmp;
+    private final float y;
+    private final float x;
 
     public Jelly(int index, float x, float y) {
         ibmp = new IndexedGameBitmap(R.mipmap.jelly, JELLY_WIDTH, JELLY_HEIGHT, JELLIES_IN_A_ROW, BORDER_WIDTH, SPACING_WIDTH);
         ibmp.setIndex(index);
+        this.x =x;
+        this.y =y;
+
         float l = x - JELLY_WIDTH / 2 * GameView.MULTIPLIER;
         float t = y - JELLY_HEIGHT / 2 * GameView.MULTIPLIER;
         float r = x + JELLY_WIDTH / 2 * GameView.MULTIPLIER;
@@ -40,6 +47,11 @@ public class Jelly extends ImageObject {
         }
     }
 
+    @Override
+    public void getBoundingRect(RectF rect) {
+        ibmp.getBoundingRect(x,y,rect);
+        //planeBitmap.getBoundingRect(x, y, rect);
+    }
     @Override
     public void draw(Canvas canvas) {
         ibmp.draw(canvas, dstRect);

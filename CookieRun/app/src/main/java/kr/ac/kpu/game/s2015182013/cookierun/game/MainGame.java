@@ -73,6 +73,7 @@ public class MainGame extends BaseGame {
         super.update();
 
         // collision check
+
     }
 
     @Override
