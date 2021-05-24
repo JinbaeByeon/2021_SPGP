@@ -1,20 +1,25 @@
-package kr.ac.kpu.game.s2015182013.cookierun.framework;
+package kr.ac.kpu.game.s2015182013.cookierun.framework.object;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
-import kr.ac.kpu.game.s2015182013.cookierun.ui.view.GameView;
-
+import kr.ac.kpu.game.s2015182013.cookierun.framework.bitmap.GameBitmap;
+import kr.ac.kpu.game.s2015182013.cookierun.framework.iface.GameObject;
+import kr.ac.kpu.game.s2015182013.cookierun.framework.view.GameView;
 
 public class ImageObject implements GameObject {
-    private final Bitmap bitmap;
+    protected Bitmap bitmap;
 
-    private Rect srcRect = new Rect();
+    protected Rect srcRect = new Rect();
     protected RectF dstRect = new RectF();
+    protected ImageObject() {}
     public ImageObject(int resId, float x, float y) {
-        bitmap = kr.ac.kpu.game.s2015182013.cookierun.framework.GameBitmap.load(resId);
+        init(resId, x, y);
+    }
+    protected void init(int resId, float x, float y) {
+        bitmap = GameBitmap.load(resId);
         int w = bitmap.getWidth();
         int h = bitmap.getHeight();
         srcRect.set(0, 0, w, h);
@@ -24,6 +29,11 @@ public class ImageObject implements GameObject {
         float b = y + h / 2 * GameView.MULTIPLIER;
         dstRect.set(l, t, r, b);
     }
+
+    public float getRight() {
+        return dstRect.right;
+    }
+
     @Override
     public void update() {
 
@@ -34,10 +44,10 @@ public class ImageObject implements GameObject {
         canvas.drawBitmap(bitmap, srcRect, dstRect, null);
     }
 
-    public float getDstWidth(){
+    public float getDstWidth() {
         return dstRect.width();
     }
-    public float getDstHeight(){
+    public float getDstHeight() {
         return dstRect.height();
     }
 }

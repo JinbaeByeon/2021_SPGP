@@ -1,24 +1,25 @@
-package kr.ac.kpu.game.s2015182013.cookierun.framework;
+package kr.ac.kpu.game.s2015182013.cookierun.framework.bitmap;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
-import kr.ac.kpu.game.s2015182013.cookierun.ui.view.GameView;
-
+import kr.ac.kpu.game.s2015182013.cookierun.framework.view.GameView;
 
 public class AnimationGameBitmap extends GameBitmap {
-//    private static final int PIXEL_MULTIPLIER = 4;
+    //private Bitmap bitmap;
     private final int imageWidth;
     private final int imageHeight;
     protected int frameWidth;
-    private final long createdOn;
-    private int frameIndex;
-    private final float framesPerSecond;
+    protected final long createdOn;
+    protected int frameIndex;
+    protected final float framesPerSecond;
     protected int frameCount;
 
     protected Rect srcRect = new Rect();
+
     public AnimationGameBitmap(int resId, float framesPerSecond, int frameCount) {
         super(resId);
+        //bitmap = GameBitmap.load(resId);
         imageWidth = bitmap.getWidth();
         imageHeight = bitmap.getHeight();
         if (frameCount == 0) {
@@ -50,11 +51,11 @@ public class AnimationGameBitmap extends GameBitmap {
     }
 
     public int getWidth() {
-        return (int) (frameWidth * GameView.MULTIPLIER);
+        return frameWidth;
     }
 
     public int getHeight() {
-        return (int) (imageHeight * GameView.MULTIPLIER);
+        return imageHeight;
     }
 }
 

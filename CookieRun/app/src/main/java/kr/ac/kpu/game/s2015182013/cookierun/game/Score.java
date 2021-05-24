@@ -6,9 +6,9 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 
 import kr.ac.kpu.game.s2015182013.cookierun.R;
-import kr.ac.kpu.game.s2015182013.cookierun.framework.GameObject;
-import kr.ac.kpu.game.s2015182013.cookierun.ui.view.GameView;
-
+import kr.ac.kpu.game.s2015182013.cookierun.framework.bitmap.GameBitmap;
+import kr.ac.kpu.game.s2015182013.cookierun.framework.iface.GameObject;
+import kr.ac.kpu.game.s2015182013.cookierun.framework.view.GameView;
 
 public class Score implements GameObject {
     private final Bitmap bitmap;
@@ -28,7 +28,7 @@ public class Score implements GameObject {
     private RectF dst = new RectF();
 
     public Score(int right, int top) {
-        bitmap = kr.ac.kpu.game.s2015182013.cookierun.framework.GameBitmap.load(R.mipmap.number_24x32);
+        bitmap = GameBitmap.load(R.mipmap.number_24x32);
         this.right = right;
         this.top = top;
     }

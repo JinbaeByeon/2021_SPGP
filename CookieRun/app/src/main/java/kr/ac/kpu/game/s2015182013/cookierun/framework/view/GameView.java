@@ -1,4 +1,4 @@
-package kr.ac.kpu.game.s2015182013.cookierun.ui.view;
+package kr.ac.kpu.game.s2015182013.cookierun.framework.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -10,23 +10,23 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import kr.ac.kpu.game.s2015182013.cookierun.framework.MainGame;
-import kr.ac.kpu.game.s2015182013.cookierun.framework.Sound;
+import kr.ac.kpu.game.s2015182013.cookierun.framework.utils.Sound;
+import kr.ac.kpu.game.s2015182013.cookierun.framework.game.BaseGame;
 
 public class GameView extends View {
-    private static final String TAG = kr.ac.kpu.game.s2015182013.cookierun.ui.view.GameView.class.getSimpleName();
+    private static final String TAG = GameView.class.getSimpleName();
 
     public static float MULTIPLIER = 2;
     private boolean running;
     //    private Ball b1, b2;
 
     private long lastFrame;
-    public static kr.ac.kpu.game.s2015182013.cookierun.ui.view.GameView view;
+    public static GameView view;
 
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         view = this;
-        kr.ac.kpu.game.s2015182013.cookierun.framework.Sound.init(context);
+        Sound.init(context);
         running = true;
 //        startUpdating();
     }
@@ -35,7 +35,7 @@ public class GameView extends View {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         //super.onSizeChanged(w, h, oldw, oldh);
         Log.d(TAG, "onSize: " + w + "," + h);
-        kr.ac.kpu.game.s2015182013.cookierun.framework.MainGame game = kr.ac.kpu.game.s2015182013.cookierun.framework.MainGame.get();
+        BaseGame game = BaseGame.get();
         boolean justInitialized = game.initResources();
         if (justInitialized) {
             requestCallback();
@@ -43,7 +43,7 @@ public class GameView extends View {
     }
 
     private void update() {
-        kr.ac.kpu.game.s2015182013.cookierun.framework.MainGame game = kr.ac.kpu.game.s2015182013.cookierun.framework.MainGame.get();
+        BaseGame game = BaseGame.get();
         game.update();
 
         invalidate();
@@ -60,7 +60,7 @@ public class GameView extends View {
                 if (lastFrame == 0) {
                     lastFrame = time;
                 }
-                kr.ac.kpu.game.s2015182013.cookierun.framework.MainGame game = kr.ac.kpu.game.s2015182013.cookierun.framework.MainGame.get();
+                BaseGame game = BaseGame.get();
                 game.frameTime = (float) (time - lastFrame) / 1_000_000_000;
                 update();
                 lastFrame = time;
@@ -71,13 +71,13 @@ public class GameView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        kr.ac.kpu.game.s2015182013.cookierun.framework.MainGame game = kr.ac.kpu.game.s2015182013.cookierun.framework.MainGame.get();
+        BaseGame game = BaseGame.get();
         game.draw(canvas);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        kr.ac.kpu.game.s2015182013.cookierun.framework.MainGame game = kr.ac.kpu.game.s2015182013.cookierun.framework.MainGame.get();
+        BaseGame game = BaseGame.get();
         return game.onTouchEvent(event);
     }
 

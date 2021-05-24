@@ -1,4 +1,4 @@
-package kr.ac.kpu.game.s2015182013.cookierun.framework;
+package kr.ac.kpu.game.s2015182013.cookierun.framework.utils;
 
 import android.content.Context;
 import android.media.AudioAttributes;
@@ -8,9 +8,8 @@ import android.util.Log;
 
 import java.util.HashMap;
 
-
 public class Sound {
-    private static final String TAG = kr.ac.kpu.game.s2015182013.cookierun.framework.Sound.class.getSimpleName();
+    private static final String TAG = Sound.class.getSimpleName();
     private static SoundPool soundPool;
     private static final int[] SOUND_IDS = {
 //            R.raw.hadouken
@@ -24,12 +23,12 @@ public class Sound {
                     .setUsage(AudioAttributes.USAGE_GAME)
                     .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                     .build();
-            soundPool = new SoundPool.Builder()
+            Sound.soundPool = new SoundPool.Builder()
                     .setAudioAttributes(audioAttributes)
                     .setMaxStreams(3)
                     .build();
         } else {
-            soundPool = new SoundPool(3, AudioManager.STREAM_MUSIC, 0);
+            Sound.soundPool = new SoundPool(3, AudioManager.STREAM_MUSIC, 0);
         }
 
         for (int resId: SOUND_IDS) {

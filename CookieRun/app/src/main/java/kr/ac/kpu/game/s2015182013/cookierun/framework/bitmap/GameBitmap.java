@@ -1,4 +1,4 @@
-package kr.ac.kpu.game.s2015182013.cookierun.framework;
+package kr.ac.kpu.game.s2015182013.cookierun.framework.bitmap;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -8,8 +8,7 @@ import android.graphics.RectF;
 
 import java.util.HashMap;
 
-import kr.ac.kpu.game.s2015182013.cookierun.ui.view.GameView;
-
+import kr.ac.kpu.game.s2015182013.cookierun.framework.view.GameView;
 
 public class GameBitmap {
     private static HashMap<Integer, Bitmap> bitmaps = new HashMap<Integer, Bitmap>();
@@ -31,7 +30,6 @@ public class GameBitmap {
     public GameBitmap(int resId) {
         bitmap = load(resId);
     }
-
 
     public void draw(Canvas canvas, float x, float y) {
         int hw = getWidth() / 2;
@@ -64,7 +62,4 @@ public class GameBitmap {
         rect.set(dl, dt, dr, db);
     }
 
-    public void move(float x, float y) {
-
-    }
 }

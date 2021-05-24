@@ -1,13 +1,13 @@
-package kr.ac.kpu.game.s2015182013.cookierun.utils;
+package kr.ac.kpu.game.s2015182013.cookierun.framework.utils;
 
 import android.graphics.RectF;
 import android.util.Log;
 
-import kr.ac.kpu.game.s2015182013.cookierun.framework.BoxCollidable;
+import kr.ac.kpu.game.s2015182013.cookierun.framework.iface.BoxCollidable;
 
 
 public class CollisionHelper {
-    private static final String TAG = kr.ac.kpu.game.s2015182013.cookierun.utils.CollisionHelper.class.getSimpleName();
+    private static final String TAG = CollisionHelper.class.getSimpleName();
     private static RectF rect1 = new RectF();
     private static RectF rect2 = new RectF();
     public static boolean collides(BoxCollidable o1, BoxCollidable o2) {
