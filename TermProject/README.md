@@ -94,4 +94,6 @@
 
 
 ---------------------------------------------------------------------------------------------------------------
-### [게임 시연 Youtube Link](https://youtu.be/db9gxgSells "2021-1 SPGP TermProject 시연 영상")
+### [게임 시연 Youtube Link](https://youtu.be/tRl0974Xv28 "2021-1 SPGP TermProject 시연 영상")
+
+### [지인 플레이 및 인터뷰 Youtube Link](https://youtu.be/db9gxgSells "2021-1 SPGP TermProject 지인 플레이 및 인터뷰")
