@@ -2,6 +2,7 @@ package kr.ac.kpu.game.s2015182013.termproject.framework;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.graphics.RectF;
 
 import kr.ac.kpu.game.s2015182013.termproject.ui.view.GameView;
 
@@ -47,7 +48,13 @@ public class AnimationGameBitmap extends GameBitmap {
         float hh = this.h / 2 * GameView.MULTIPLIER;
         srcRect.set(fw * frameIndex, 0, fw * frameIndex + fw, h);
         dstRect.set(x - hw, y - hh, x + hw, y + hh);
+        drawBoundingRect(canvas);
         canvas.drawBitmap(bitmap, srcRect, dstRect, null);
+    }
+
+    @Override
+    public void getBoundingRect(float x, float y, RectF rect) {
+        rect.set(dstRect);
     }
 
     public int getWidth() {
@@ -55,7 +62,7 @@ public class AnimationGameBitmap extends GameBitmap {
     }
 
     public int getHeight() {
-        return (int) (imageHeight * GameView.MULTIPLIER);
+        return (int) (h * GameView.MULTIPLIER);
     }
 
     public void reset() {

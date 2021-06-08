@@ -18,32 +18,31 @@ import kr.ac.kpu.game.s2015182013.termproject.framework.Sound;
 import kr.ac.kpu.game.s2015182013.termproject.ui.view.GameView;
 
 public class Enemy implements GameObject, BoxCollidable, Recyclable {
-    private static final int BULLET_SPEED = -1000;
-    private static float FIRE_INTERVAL = 4.0f ;
-    private float fireTime;
+    protected final int BULLET_SPEED = -1000;
+    protected float FIRE_INTERVAL = 4.0f ;
+    protected float fireTime;
     private static final int[] RESOURCE_IDS = {
             R.mipmap.enemy_a, R.mipmap.enemy_b, R.mipmap.enemy_c, R.mipmap.enemy_d
     };
     private static final String TAG = Enemy.class.getSimpleName();
-    private float x;
-    private GameBitmap planeBitmap;
-    private int hp;
-    private float y;
-    private int speed;
-    Paint paint = new Paint();
-    private int maxHp;
-    private int score;
-    private int range;
-    private int power;
-    private boolean goRight;
-    private float sx;
-    private float dirTime;
-    private Random r;
-    private AnimationGameBitmap expBitmap;
-    private float expTime;
-    private boolean isHitted;
+    protected float x;
+    protected GameBitmap planeBitmap;
+    protected int hp;
+    protected float y;
+    protected int speed;
+    protected Paint paint = new Paint();
+    protected int maxHp;
+    protected int score;
+    protected int power;
+    protected boolean goRight;
+    protected float sx;
+    protected float dirTime;
+    protected Random r;
+    protected AnimationGameBitmap expBitmap;
+    protected float expTime;
+    protected boolean isHitted;
 
-    private Enemy() {
+    protected Enemy() {
         Log.d(TAG, "Enemy constructor");
     }
 
@@ -66,7 +65,7 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
         score = hp =maxHp = level  *100;
         sx = r.nextInt(300)+300;
         fireTime = 0.0f;
-        FIRE_INTERVAL -= (level-1);
+        FIRE_INTERVAL = 4 - (level-1);
         power = level;
         goRight = r.nextBoolean();
 
@@ -121,15 +120,15 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
 
         fireTime += game.frameTime;
         if (fireTime >= FIRE_INTERVAL) {
-            for (int i = 0; i < power; i++) {
-                fireBullet(-15*i*(int)GameView.MULTIPLIER);
+            for (int i = -power/2; i < (power+1)/2; i++) {
+                fireBullet(-25*i*(int)GameView.MULTIPLIER);
             }
             fireTime -= FIRE_INTERVAL;
         }
     }
 
     private void fireBullet(int offsetY) {
-        Bullet bullet = Bullet.get(this.x, this.y+offsetY, BULLET_SPEED, 10);
+        Bullet bullet = Bullet.get(this.x, this.y+offsetY, BULLET_SPEED, 10, 0);
         MainGame game = MainGame.get();
         game.add(MainGame.Layer.eBullet, bullet);
     }
@@ -142,11 +141,11 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
             expBitmap.draw(canvas,x,y+10);
     }
 
-    private void drawHealthBar(Canvas canvas) {
-        float w = 100;
+    protected void drawHealthBar(Canvas canvas) {
+        float w = planeBitmap.getWidth();
         float h = planeBitmap.getHeight();
         float l = x- w/2;
-        float t = y + h + 10;
+        float t = y + h/2 + 10;
         float r = x+w/2;
         float b = t + 30;
         paint.setColor(Color.GRAY);
@@ -165,6 +164,7 @@ public class Enemy implements GameObject, BoxCollidable, Recyclable {
     public void recycle() {
         // 재활용통에 들어가는 시점에 불리는 함수. 현재는 할일없음.
         FIRE_INTERVAL = 4.0f ;
+        fireTime = 0;
     }
 
     @Override

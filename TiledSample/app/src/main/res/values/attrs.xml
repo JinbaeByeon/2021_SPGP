@@ -1,0 +1,7 @@
+<resources>
+    <declare-styleable name="TileView">
+        <attr name="map" format="reference" />
+        <attr name="tileset" format="reference" />
+        <attr name="sizeFactor" foramt="reference" />
+    </declare-styleable>
+</resources>

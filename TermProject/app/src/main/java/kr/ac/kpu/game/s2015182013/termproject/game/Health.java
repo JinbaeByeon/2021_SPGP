@@ -30,7 +30,7 @@ public class Health implements GameObject {
     @Override
     public void draw(Canvas canvas) {
         int x = left;
-        float dw = 300;
+        float dw = 400;
         int dh = 80;
         paint.setColor(Color.GRAY);
         canvas.drawRect(x,top,x+dw,top+dh,paint);

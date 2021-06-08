@@ -14,22 +14,31 @@ public class EnemyGenerator implements GameObject {
     private float time;
     private float spawnInterval;
     private int wave;
+    private static boolean isGenerate;
 
     public EnemyGenerator() {
         time = INITIAL_SPAWN_INTERVAL;
         spawnInterval = INITIAL_SPAWN_INTERVAL;
         wave = 0;
+        isGenerate =true;
     }
+
+    public static void startGenerate() {
+        isGenerate=true;
+    }
+
     @Override
     public void update() {
-        MainGame game = MainGame.get();
-        time += game.frameTime;
-        if (time >= spawnInterval) {
-            generate();
-            time -= spawnInterval;
-            spawnInterval -=game.frameTime;
-            if(spawnInterval<1)
-                spawnInterval=1;
+        if(isGenerate) {
+            MainGame game = MainGame.get();
+            time += game.frameTime;
+            if (time >= spawnInterval) {
+                generate();
+                time -= spawnInterval;
+                spawnInterval -= game.frameTime;
+                if (spawnInterval < 1)
+                    spawnInterval = 1;
+            }
         }
     }
 
@@ -45,9 +54,15 @@ public class EnemyGenerator implements GameObject {
         int level = wave / 5 - r.nextInt(2);
         if (level < 1) level = 1;
         if (level > 4) level = 4;
-
-        Enemy enemy = Enemy.get(level, x, y, (r.nextInt(50)+50)*level);
-        game.add(MainGame.Layer.enemy, enemy);
+        if(wave%4 ==0){
+            Boss boss = Boss.get(wave/4,w/2,y,100);
+            game.add(MainGame.Layer.enemy,boss);
+            isGenerate = false;
+        }
+        else {
+            Enemy enemy = Enemy.get(level, x, y, (r.nextInt(50) + 50) * level);
+            game.add(MainGame.Layer.enemy, enemy);
+        }
     }
 
     @Override

@@ -1,6 +1,8 @@
 package kr.ac.kpu.game.s2015182013.termproject.framework;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
@@ -18,6 +20,10 @@ public class IndexedGameBitmap extends GameBitmap {
         this.xcount = xcount;
         this.border = border;
         this.spacing = spacing;
+
+        hw = (int) (width / 2 * GameView.MULTIPLIER);
+        hh = (int) (height / 2 * GameView.MULTIPLIER);
+        setIndex(xcount/2);
     }
 
     protected Rect srcRect = new Rect();
@@ -33,18 +39,22 @@ public class IndexedGameBitmap extends GameBitmap {
 
     @Override
     public void draw(Canvas canvas, float x, float y) {
-        float hw = width / 2 * GameView.MULTIPLIER;
-        float hh = height / 2 * GameView.MULTIPLIER;
         dstRect.set(x - hw, y - hh, x + hw, y + hh);
+        drawBoundingRect(canvas);
         canvas.drawBitmap(bitmap, srcRect, dstRect, null);
     }
-
     public void draw(Canvas canvas, RectF dstRect) {
+        drawBoundingRect(canvas);
         canvas.drawBitmap(bitmap, srcRect, dstRect, null);
     }
 
     @Override
     public void getBoundingRect(float x, float y, RectF rect) {
-        rect.set(dstRect);
+        rect.set(dstRect.left + ox/2,dstRect.top,dstRect.right- ox/2,dstRect.bottom);
+    }
+
+
+    public int getXcount() {
+        return xcount;
     }
 }

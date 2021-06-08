@@ -56,6 +56,7 @@ public class IndexedAnimationGameBitmap extends AnimationGameBitmap {
         float hw = fw / 2 * GameView.MULTIPLIER;
         float hh = h / 2 * GameView.MULTIPLIER;
         dstRect.set(x - hw, y - hh, x + hw, y + hh);
+        drawBoundingRect(canvas);
         canvas.drawBitmap(bitmap, srcRects.get(frameIndex), dstRect, null);
     }
 

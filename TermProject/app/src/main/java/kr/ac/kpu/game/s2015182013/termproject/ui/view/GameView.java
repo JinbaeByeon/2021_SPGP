@@ -1,6 +1,8 @@
 package kr.ac.kpu.game.s2015182013.termproject.ui.view;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -83,6 +85,7 @@ public class GameView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         MainGame game = MainGame.get();
+//        Log.d(TAG,"event: " + event.toString());
         return game.onTouchEvent(event);
     }
 
@@ -98,6 +101,24 @@ public class GameView extends View {
             lastFrame = 0;
             requestCallback();
         }
+    }
+    public void finishActivity() {
+        Activity activity = getActivity();
+        activity.finish();
+        lastFrame = 0;
+        running = false;
+        bgSound.stop();
+    }
+
+    private Activity getActivity() {
+        Context context = getContext();
+        while (context instanceof ContextWrapper) {
+            if (context instanceof Activity) {
+                return (Activity) context;
+            }
+            context = ((ContextWrapper) context).getBaseContext();
+        }
+        return null;
     }
 }
 
